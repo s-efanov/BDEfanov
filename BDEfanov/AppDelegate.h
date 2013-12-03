@@ -1,9 +1,9 @@
 //
 //  AppDelegate.h
-//  BDEfanov
+//  Kurs
 //
-//  Created by Сергей on 03.12.13.
-//  Copyright (c) 2013 MyCompany. All rights reserved.
+//  Created by Sergey Efanov on 02.12.13.
+//  Copyright (c) 2013 Sergey Efanov. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -11,5 +11,13 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+
+@property (nonatomic, retain) NSString *user;
+@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
+- (void)saveContext;
+- (NSURL *)applicationDocumentsDirectory;
 
 @end
