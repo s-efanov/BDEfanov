@@ -22,8 +22,12 @@
 		871F92E8184E3E9800AEF649 /* BDEfanovTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F92E7184E3E9800AEF649 /* BDEfanovTests.m */; };
 		871F92F7184E410A00AEF649 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F92F2184E410A00AEF649 /* DetailViewController.m */; };
 		871F92F8184E410A00AEF649 /* EnterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F92F4184E410A00AEF649 /* EnterVC.m */; };
-		871F92F9184E410A00AEF649 /* Kurs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 871F92F5184E410A00AEF649 /* Kurs.xcdatamodeld */; };
 		871F92FC184E415500AEF649 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F92FB184E415500AEF649 /* MasterViewController.m */; };
+		871F9303184E423D00AEF649 /* BDEfanov.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 871F9301184E423D00AEF649 /* BDEfanov.xcdatamodeld */; };
+		871F9306184E424B00AEF649 /* Tarifs.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F9305184E424B00AEF649 /* Tarifs.m */; };
+		871F9309184E424C00AEF649 /* Contract.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F9308184E424C00AEF649 /* Contract.m */; };
+		871F930C184E424C00AEF649 /* Office.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F930B184E424C00AEF649 /* Office.m */; };
+		871F930E184E4FFD00AEF649 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871F930D184E4FFD00AEF649 /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,9 +62,17 @@
 		871F92F2184E410A00AEF649 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		871F92F3184E410A00AEF649 /* EnterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterVC.h; sourceTree = "<group>"; };
 		871F92F4184E410A00AEF649 /* EnterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterVC.m; sourceTree = "<group>"; };
-		871F92F6184E410A00AEF649 /* Kurs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kurs.xcdatamodel; sourceTree = "<group>"; };
 		871F92FA184E415500AEF649 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		871F92FB184E415500AEF649 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		871F9302184E423D00AEF649 /* KursovayaBD.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = KursovayaBD.xcdatamodel; sourceTree = "<group>"; };
+		871F9304184E424B00AEF649 /* Tarifs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tarifs.h; path = CoreData/Tarifs.h; sourceTree = "<group>"; };
+		871F9305184E424B00AEF649 /* Tarifs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tarifs.m; path = CoreData/Tarifs.m; sourceTree = "<group>"; };
+		871F9307184E424C00AEF649 /* Contract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Contract.h; path = CoreData/Contract.h; sourceTree = "<group>"; };
+		871F9308184E424C00AEF649 /* Contract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Contract.m; path = CoreData/Contract.m; sourceTree = "<group>"; };
+		871F930A184E424C00AEF649 /* Office.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Office.h; path = CoreData/Office.h; sourceTree = "<group>"; };
+		871F930B184E424C00AEF649 /* Office.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Office.m; path = CoreData/Office.m; sourceTree = "<group>"; };
+		871F930D184E4FFD00AEF649 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		871F930F184E5AA900AEF649 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				871F930E184E4FFD00AEF649 /* CoreData.framework in Frameworks */,
 				871F92BF184E3E9800AEF649 /* CoreGraphics.framework in Frameworks */,
 				871F92C1184E3E9800AEF649 /* UIKit.framework in Frameworks */,
 				871F92BD184E3E9800AEF649 /* Foundation.framework in Frameworks */,
@@ -109,6 +122,7 @@
 		871F92BB184E3E9800AEF649 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				871F930D184E4FFD00AEF649 /* CoreData.framework */,
 				871F92BC184E3E9800AEF649 /* Foundation.framework */,
 				871F92BE184E3E9800AEF649 /* CoreGraphics.framework */,
 				871F92C0184E3E9800AEF649 /* UIKit.framework */,
@@ -120,13 +134,14 @@
 		871F92C2184E3E9800AEF649 /* BDEfanov */ = {
 			isa = PBXGroup;
 			children = (
+				871F930F184E5AA900AEF649 /* Constants.h */,
+				871F9300184E420200AEF649 /* CoreData */,
 				871F92FA184E415500AEF649 /* MasterViewController.h */,
 				871F92FB184E415500AEF649 /* MasterViewController.m */,
 				871F92F1184E410A00AEF649 /* DetailViewController.h */,
 				871F92F2184E410A00AEF649 /* DetailViewController.m */,
 				871F92F3184E410A00AEF649 /* EnterVC.h */,
 				871F92F4184E410A00AEF649 /* EnterVC.m */,
-				871F92F5184E410A00AEF649 /* Kurs.xcdatamodeld */,
 				871F92CB184E3E9800AEF649 /* AppDelegate.h */,
 				871F92CC184E3E9800AEF649 /* AppDelegate.m */,
 				871F92CE184E3E9800AEF649 /* Main.storyboard */,
@@ -163,6 +178,20 @@
 				871F92E4184E3E9800AEF649 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		871F9300184E420200AEF649 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				871F9301184E423D00AEF649 /* BDEfanov.xcdatamodeld */,
+				871F930A184E424C00AEF649 /* Office.h */,
+				871F930B184E424C00AEF649 /* Office.m */,
+				871F9307184E424C00AEF649 /* Contract.h */,
+				871F9308184E424C00AEF649 /* Contract.m */,
+				871F9304184E424B00AEF649 /* Tarifs.h */,
+				871F9305184E424B00AEF649 /* Tarifs.m */,
+			);
+			name = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,10 +293,13 @@
 			files = (
 				871F92CD184E3E9800AEF649 /* AppDelegate.m in Sources */,
 				871F92C9184E3E9800AEF649 /* main.m in Sources */,
+				871F9303184E423D00AEF649 /* BDEfanov.xcdatamodeld in Sources */,
+				871F930C184E424C00AEF649 /* Office.m in Sources */,
+				871F9309184E424C00AEF649 /* Contract.m in Sources */,
 				871F92F7184E410A00AEF649 /* DetailViewController.m in Sources */,
 				871F92F8184E410A00AEF649 /* EnterVC.m in Sources */,
 				871F92FC184E415500AEF649 /* MasterViewController.m in Sources */,
-				871F92F9184E410A00AEF649 /* Kurs.xcdatamodeld in Sources */,
+				871F9306184E424B00AEF649 /* Tarifs.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,13 +522,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		871F92F5184E410A00AEF649 /* Kurs.xcdatamodeld */ = {
+		871F9301184E423D00AEF649 /* BDEfanov.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				871F92F6184E410A00AEF649 /* Kurs.xcdatamodel */,
+				871F9302184E423D00AEF649 /* KursovayaBD.xcdatamodel */,
 			);
-			currentVersion = 871F92F6184E410A00AEF649 /* Kurs.xcdatamodel */;
-			path = Kurs.xcdatamodeld;
+			currentVersion = 871F9302184E423D00AEF649 /* KursovayaBD.xcdatamodel */;
+			name = BDEfanov.xcdatamodeld;
+			path = CoreData/BDEfanov.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
