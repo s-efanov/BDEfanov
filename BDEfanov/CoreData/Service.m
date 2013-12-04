@@ -1,21 +1,18 @@
 //
-//  Tarifs.m
+//  Service.m
 //  BDEfanov
 //
 //  Created by Сергей on 04.12.13.
 //  Copyright (c) 2013 MyCompany. All rights reserved.
 //
 
-#import "Tarifs.h"
-#import "Contract.h"
+#import "Service.h"
 
 
-@implementation Tarifs
+@implementation Service
 
 @dynamic cost;
-@dynamic idTariff;
+@dynamic idService;
 @dynamic name;
-@dynamic speed;
-@dynamic relationship;
 
 @end

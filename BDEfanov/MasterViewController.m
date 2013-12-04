@@ -41,9 +41,10 @@
     NSArray *admin = @[MY_OFFICE, MY_TARIFF, MY_SERVICE, MY_CLIENT, MY_WORKER, MY_EQUIPMENT, MY_APPLICATION, MY_CONTRACT];
     NSArray *callWorker = @[MY_CONTRACT, MY_APPLICATION, MY_CLIENT];
     NSArray *techWorker = @[MY_EQUIPMENT, MY_APPLICATION];
+    NSArray *cadrWorker = @[MY_DOLZ, MY_WORKER];
     NSArray *officeWorker = @[MY_CLIENT, MY_CONTRACT];
     
-    NSDictionary *dictUsers = [NSDictionary dictionaryWithObjectsAndKeys:admin, @"admin", callWorker, @"callWorker", techWorker, @"techWorker", officeWorker, @"officeWorker", nil];
+    NSDictionary *dictUsers = [NSDictionary dictionaryWithObjectsAndKeys:admin, @"admin", callWorker, @"callWorker", techWorker, @"techWorker", officeWorker, @"officeWorker", cadrWorker, @"cadrWorker", nil];
     
     fields = [dictUsers objectForKey:((AppDelegate *)[[UIApplication sharedApplication] delegate]).user];
 }

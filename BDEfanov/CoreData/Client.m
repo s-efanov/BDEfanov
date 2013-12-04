@@ -1,22 +1,21 @@
 //
-//  Office.m
+//  Client.m
 //  BDEfanov
 //
 //  Created by Сергей on 04.12.13.
 //  Copyright (c) 2013 MyCompany. All rights reserved.
 //
 
-#import "Office.h"
-#import "Contract.h"
+#import "Client.h"
 
 
-@implementation Office
+@implementation Client
 
 @dynamic adress;
-@dynamic idOffice;
-@dynamic index;
-@dynamic info;
+@dynamic birthdate;
+@dynamic idClient;
+@dynamic lastName;
 @dynamic name;
-@dynamic relationship;
+@dynamic otec;
 
 @end

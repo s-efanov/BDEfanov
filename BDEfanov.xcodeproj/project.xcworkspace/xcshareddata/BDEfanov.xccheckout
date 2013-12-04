@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>2E04ACAF-BD7A-4625-B88A-034F58AC5D21</string>
+	<key>IDESourceControlProjectName</key>
+	<string>BDEfanov</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>B5B8A329-EE4B-48B5-8089-B8C059AE988A</key>
+		<string>https://github.com/NeorV/BDEfanov.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>BDEfanov.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>B5B8A329-EE4B-48B5-8089-B8C059AE988A</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/NeorV/BDEfanov.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>B5B8A329-EE4B-48B5-8089-B8C059AE988A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B5B8A329-EE4B-48B5-8089-B8C059AE988A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>BDEfanov</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -24,10 +24,26 @@
 		871F92F8184E410A00AEF649 /* EnterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F92F4184E410A00AEF649 /* EnterVC.m */; };
 		871F92FC184E415500AEF649 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F92FB184E415500AEF649 /* MasterViewController.m */; };
 		871F9303184E423D00AEF649 /* BDEfanov.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 871F9301184E423D00AEF649 /* BDEfanov.xcdatamodeld */; };
-		871F9306184E424B00AEF649 /* Tarifs.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F9305184E424B00AEF649 /* Tarifs.m */; };
-		871F9309184E424C00AEF649 /* Contract.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F9308184E424C00AEF649 /* Contract.m */; };
-		871F930C184E424C00AEF649 /* Office.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F930B184E424C00AEF649 /* Office.m */; };
 		871F930E184E4FFD00AEF649 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871F930D184E4FFD00AEF649 /* CoreData.framework */; };
+		871F9319184E6FE800AEF649 /* NewBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F9318184E6FE800AEF649 /* NewBaseVC.m */; };
+		871F9325184E706B00AEF649 /* NewOfficeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F9320184E706B00AEF649 /* NewOfficeVC.m */; };
+		871F9326184E706B00AEF649 /* NewTariffVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F9323184E706B00AEF649 /* NewTariffVC.m */; };
+		871F9347184E8BDD00AEF649 /* NewEquipmentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F9346184E8BDD00AEF649 /* NewEquipmentVC.m */; };
+		871F934B184E8C1900AEF649 /* NewApplicationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F934A184E8C1900AEF649 /* NewApplicationVC.m */; };
+		871F934F184E8C4A00AEF649 /* NewServiceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F934E184E8C4A00AEF649 /* NewServiceVC.m */; };
+		871F9353184E8C7100AEF649 /* NewClientVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F9352184E8C7100AEF649 /* NewClientVC.m */; };
+		871F9357184E8C9700AEF649 /* NewDolzVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F9356184E8C9700AEF649 /* NewDolzVC.m */; };
+		871F935B184E8CCB00AEF649 /* NewContractVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F935A184E8CCB00AEF649 /* NewContractVC.m */; };
+		871F935F184E8D2900AEF649 /* NewWorkerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F935E184E8D2900AEF649 /* NewWorkerVC.m */; };
+		872860A2184FBCEA0006375D /* Contract.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860A1184FBCEA0006375D /* Contract.m */; };
+		872860A5184FBCEA0006375D /* Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860A4184FBCEA0006375D /* Client.m */; };
+		872860A8184FBCEA0006375D /* Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860A7184FBCEA0006375D /* Worker.m */; };
+		872860AB184FBCEA0006375D /* Office.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860AA184FBCEA0006375D /* Office.m */; };
+		872860AE184FBCEA0006375D /* Dolz.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860AD184FBCEA0006375D /* Dolz.m */; };
+		872860B1184FBCEA0006375D /* Equipment.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860B0184FBCEA0006375D /* Equipment.m */; };
+		872860B4184FBCEA0006375D /* Tarifs.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860B3184FBCEA0006375D /* Tarifs.m */; };
+		872860B7184FBCEA0006375D /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860B6184FBCEA0006375D /* Service.m */; };
+		872860BD184FBFA50006375D /* Application.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860BC184FBFA50006375D /* Application.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,14 +81,47 @@
 		871F92FA184E415500AEF649 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		871F92FB184E415500AEF649 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		871F9302184E423D00AEF649 /* KursovayaBD.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = KursovayaBD.xcdatamodel; sourceTree = "<group>"; };
-		871F9304184E424B00AEF649 /* Tarifs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tarifs.h; path = CoreData/Tarifs.h; sourceTree = "<group>"; };
-		871F9305184E424B00AEF649 /* Tarifs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tarifs.m; path = CoreData/Tarifs.m; sourceTree = "<group>"; };
-		871F9307184E424C00AEF649 /* Contract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Contract.h; path = CoreData/Contract.h; sourceTree = "<group>"; };
-		871F9308184E424C00AEF649 /* Contract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Contract.m; path = CoreData/Contract.m; sourceTree = "<group>"; };
-		871F930A184E424C00AEF649 /* Office.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Office.h; path = CoreData/Office.h; sourceTree = "<group>"; };
-		871F930B184E424C00AEF649 /* Office.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Office.m; path = CoreData/Office.m; sourceTree = "<group>"; };
 		871F930D184E4FFD00AEF649 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		871F930F184E5AA900AEF649 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		871F9317184E6FE800AEF649 /* NewBaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewBaseVC.h; path = NewBaseVC/NewBaseVC.h; sourceTree = "<group>"; };
+		871F9318184E6FE800AEF649 /* NewBaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewBaseVC.m; path = NewBaseVC/NewBaseVC.m; sourceTree = "<group>"; };
+		871F931F184E706B00AEF649 /* NewOfficeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewOfficeVC.h; path = NewBaseVC/NewOffice/NewOfficeVC.h; sourceTree = "<group>"; };
+		871F9320184E706B00AEF649 /* NewOfficeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewOfficeVC.m; path = NewBaseVC/NewOffice/NewOfficeVC.m; sourceTree = "<group>"; };
+		871F9322184E706B00AEF649 /* NewTariffVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTariffVC.h; sourceTree = "<group>"; };
+		871F9323184E706B00AEF649 /* NewTariffVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTariffVC.m; sourceTree = "<group>"; };
+		871F9328184E725900AEF649 /* BaseVCProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseVCProtocol.h; sourceTree = "<group>"; };
+		871F9345184E8BDD00AEF649 /* NewEquipmentVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewEquipmentVC.h; path = NewBaseVC/NewEquipment/NewEquipmentVC.h; sourceTree = "<group>"; };
+		871F9346184E8BDD00AEF649 /* NewEquipmentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewEquipmentVC.m; path = NewBaseVC/NewEquipment/NewEquipmentVC.m; sourceTree = "<group>"; };
+		871F9349184E8C1900AEF649 /* NewApplicationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewApplicationVC.h; path = NewBaseVC/NewApplication/NewApplicationVC.h; sourceTree = "<group>"; };
+		871F934A184E8C1900AEF649 /* NewApplicationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewApplicationVC.m; path = NewBaseVC/NewApplication/NewApplicationVC.m; sourceTree = "<group>"; };
+		871F934D184E8C4A00AEF649 /* NewServiceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewServiceVC.h; path = NewBaseVC/NewService/NewServiceVC.h; sourceTree = "<group>"; };
+		871F934E184E8C4A00AEF649 /* NewServiceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewServiceVC.m; path = NewBaseVC/NewService/NewServiceVC.m; sourceTree = "<group>"; };
+		871F9351184E8C7100AEF649 /* NewClientVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewClientVC.h; path = NewBaseVC/NewClientVC/NewClientVC.h; sourceTree = "<group>"; };
+		871F9352184E8C7100AEF649 /* NewClientVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewClientVC.m; path = NewBaseVC/NewClientVC/NewClientVC.m; sourceTree = "<group>"; };
+		871F9355184E8C9700AEF649 /* NewDolzVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewDolzVC.h; path = NewBaseVC/NewDolzVC/NewDolzVC.h; sourceTree = "<group>"; };
+		871F9356184E8C9700AEF649 /* NewDolzVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewDolzVC.m; path = NewBaseVC/NewDolzVC/NewDolzVC.m; sourceTree = "<group>"; };
+		871F9359184E8CCB00AEF649 /* NewContractVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewContractVC.h; path = NewBaseVC/NewContractVC/NewContractVC.h; sourceTree = "<group>"; };
+		871F935A184E8CCB00AEF649 /* NewContractVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewContractVC.m; path = NewBaseVC/NewContractVC/NewContractVC.m; sourceTree = "<group>"; };
+		871F935D184E8D2900AEF649 /* NewWorkerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewWorkerVC.h; path = NewBaseVC/NewWorker/NewWorkerVC.h; sourceTree = "<group>"; };
+		871F935E184E8D2900AEF649 /* NewWorkerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewWorkerVC.m; path = NewBaseVC/NewWorker/NewWorkerVC.m; sourceTree = "<group>"; };
+		872860A0184FBCEA0006375D /* Contract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Contract.h; path = CoreData/Contract.h; sourceTree = "<group>"; };
+		872860A1184FBCEA0006375D /* Contract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Contract.m; path = CoreData/Contract.m; sourceTree = "<group>"; };
+		872860A3184FBCEA0006375D /* Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Client.h; path = CoreData/Client.h; sourceTree = "<group>"; };
+		872860A4184FBCEA0006375D /* Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Client.m; path = CoreData/Client.m; sourceTree = "<group>"; };
+		872860A6184FBCEA0006375D /* Worker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Worker.h; path = CoreData/Worker.h; sourceTree = "<group>"; };
+		872860A7184FBCEA0006375D /* Worker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Worker.m; path = CoreData/Worker.m; sourceTree = "<group>"; };
+		872860A9184FBCEA0006375D /* Office.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Office.h; path = CoreData/Office.h; sourceTree = "<group>"; };
+		872860AA184FBCEA0006375D /* Office.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Office.m; path = CoreData/Office.m; sourceTree = "<group>"; };
+		872860AC184FBCEA0006375D /* Dolz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dolz.h; path = CoreData/Dolz.h; sourceTree = "<group>"; };
+		872860AD184FBCEA0006375D /* Dolz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Dolz.m; path = CoreData/Dolz.m; sourceTree = "<group>"; };
+		872860AF184FBCEA0006375D /* Equipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Equipment.h; path = CoreData/Equipment.h; sourceTree = "<group>"; };
+		872860B0184FBCEA0006375D /* Equipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Equipment.m; path = CoreData/Equipment.m; sourceTree = "<group>"; };
+		872860B2184FBCEA0006375D /* Tarifs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tarifs.h; path = CoreData/Tarifs.h; sourceTree = "<group>"; };
+		872860B3184FBCEA0006375D /* Tarifs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tarifs.m; path = CoreData/Tarifs.m; sourceTree = "<group>"; };
+		872860B5184FBCEA0006375D /* Service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Service.h; path = CoreData/Service.h; sourceTree = "<group>"; };
+		872860B6184FBCEA0006375D /* Service.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Service.m; path = CoreData/Service.m; sourceTree = "<group>"; };
+		872860BB184FBFA50006375D /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Application.h; path = CoreData/Application.h; sourceTree = "<group>"; };
+		872860BC184FBFA50006375D /* Application.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Application.m; path = CoreData/Application.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,16 +183,14 @@
 		871F92C2184E3E9800AEF649 /* BDEfanov */ = {
 			isa = PBXGroup;
 			children = (
-				871F930F184E5AA900AEF649 /* Constants.h */,
-				871F9300184E420200AEF649 /* CoreData */,
-				871F92FA184E415500AEF649 /* MasterViewController.h */,
-				871F92FB184E415500AEF649 /* MasterViewController.m */,
-				871F92F1184E410A00AEF649 /* DetailViewController.h */,
-				871F92F2184E410A00AEF649 /* DetailViewController.m */,
-				871F92F3184E410A00AEF649 /* EnterVC.h */,
-				871F92F4184E410A00AEF649 /* EnterVC.m */,
+				871F9328184E725900AEF649 /* BaseVCProtocol.h */,
+				871F9314184E6F8600AEF649 /* NewRow */,
 				871F92CB184E3E9800AEF649 /* AppDelegate.h */,
 				871F92CC184E3E9800AEF649 /* AppDelegate.m */,
+				871F930F184E5AA900AEF649 /* Constants.h */,
+				871F9313184E6F2600AEF649 /* EnterVC */,
+				871F9312184E6F1300AEF649 /* SplitView */,
+				871F9300184E420200AEF649 /* CoreData */,
 				871F92CE184E3E9800AEF649 /* Main.storyboard */,
 				871F92D4184E3E9800AEF649 /* Images.xcassets */,
 				871F92C3184E3E9800AEF649 /* Supporting Files */,
@@ -183,15 +230,155 @@
 		871F9300184E420200AEF649 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				872860A0184FBCEA0006375D /* Contract.h */,
+				872860B5184FBCEA0006375D /* Service.h */,
+				872860B6184FBCEA0006375D /* Service.m */,
+				872860B2184FBCEA0006375D /* Tarifs.h */,
+				872860B3184FBCEA0006375D /* Tarifs.m */,
+				872860AF184FBCEA0006375D /* Equipment.h */,
+				872860B0184FBCEA0006375D /* Equipment.m */,
+				872860AC184FBCEA0006375D /* Dolz.h */,
+				872860AD184FBCEA0006375D /* Dolz.m */,
+				872860A9184FBCEA0006375D /* Office.h */,
+				872860AA184FBCEA0006375D /* Office.m */,
+				872860A6184FBCEA0006375D /* Worker.h */,
+				872860A7184FBCEA0006375D /* Worker.m */,
+				872860A3184FBCEA0006375D /* Client.h */,
+				872860A4184FBCEA0006375D /* Client.m */,
+				872860A1184FBCEA0006375D /* Contract.m */,
 				871F9301184E423D00AEF649 /* BDEfanov.xcdatamodeld */,
-				871F930A184E424C00AEF649 /* Office.h */,
-				871F930B184E424C00AEF649 /* Office.m */,
-				871F9307184E424C00AEF649 /* Contract.h */,
-				871F9308184E424C00AEF649 /* Contract.m */,
-				871F9304184E424B00AEF649 /* Tarifs.h */,
-				871F9305184E424B00AEF649 /* Tarifs.m */,
+				872860BB184FBFA50006375D /* Application.h */,
+				872860BC184FBFA50006375D /* Application.m */,
 			);
 			name = CoreData;
+			sourceTree = "<group>";
+		};
+		871F9312184E6F1300AEF649 /* SplitView */ = {
+			isa = PBXGroup;
+			children = (
+				871F92FA184E415500AEF649 /* MasterViewController.h */,
+				871F92FB184E415500AEF649 /* MasterViewController.m */,
+				871F92F1184E410A00AEF649 /* DetailViewController.h */,
+				871F92F2184E410A00AEF649 /* DetailViewController.m */,
+			);
+			name = SplitView;
+			sourceTree = "<group>";
+		};
+		871F9313184E6F2600AEF649 /* EnterVC */ = {
+			isa = PBXGroup;
+			children = (
+				871F92F3184E410A00AEF649 /* EnterVC.h */,
+				871F92F4184E410A00AEF649 /* EnterVC.m */,
+			);
+			name = EnterVC;
+			sourceTree = "<group>";
+		};
+		871F9314184E6F8600AEF649 /* NewRow */ = {
+			isa = PBXGroup;
+			children = (
+				871F935C184E8CFD00AEF649 /* NewWorker */,
+				871F9358184E8CAD00AEF649 /* NewContract */,
+				871F9354184E8C7B00AEF649 /* NewDolz */,
+				871F9350184E8C5200AEF649 /* NewClient */,
+				871F934C184E8C2100AEF649 /* NewService */,
+				871F9348184E8BEE00AEF649 /* NewApplication */,
+				871F9344184E8BB100AEF649 /* NewEquipment */,
+				871F9321184E706B00AEF649 /* NewTarif */,
+				871F931A184E705D00AEF649 /* NewOffice */,
+				871F9315184E6F9300AEF649 /* BaseNew */,
+			);
+			name = NewRow;
+			sourceTree = "<group>";
+		};
+		871F9315184E6F9300AEF649 /* BaseNew */ = {
+			isa = PBXGroup;
+			children = (
+				871F9317184E6FE800AEF649 /* NewBaseVC.h */,
+				871F9318184E6FE800AEF649 /* NewBaseVC.m */,
+			);
+			name = BaseNew;
+			sourceTree = "<group>";
+		};
+		871F931A184E705D00AEF649 /* NewOffice */ = {
+			isa = PBXGroup;
+			children = (
+				871F931F184E706B00AEF649 /* NewOfficeVC.h */,
+				871F9320184E706B00AEF649 /* NewOfficeVC.m */,
+			);
+			name = NewOffice;
+			sourceTree = "<group>";
+		};
+		871F9321184E706B00AEF649 /* NewTarif */ = {
+			isa = PBXGroup;
+			children = (
+				871F9322184E706B00AEF649 /* NewTariffVC.h */,
+				871F9323184E706B00AEF649 /* NewTariffVC.m */,
+			);
+			name = NewTarif;
+			path = NewBaseVC/NewTariffVC;
+			sourceTree = "<group>";
+		};
+		871F9344184E8BB100AEF649 /* NewEquipment */ = {
+			isa = PBXGroup;
+			children = (
+				871F9345184E8BDD00AEF649 /* NewEquipmentVC.h */,
+				871F9346184E8BDD00AEF649 /* NewEquipmentVC.m */,
+			);
+			name = NewEquipment;
+			sourceTree = "<group>";
+		};
+		871F9348184E8BEE00AEF649 /* NewApplication */ = {
+			isa = PBXGroup;
+			children = (
+				871F9349184E8C1900AEF649 /* NewApplicationVC.h */,
+				871F934A184E8C1900AEF649 /* NewApplicationVC.m */,
+			);
+			name = NewApplication;
+			sourceTree = "<group>";
+		};
+		871F934C184E8C2100AEF649 /* NewService */ = {
+			isa = PBXGroup;
+			children = (
+				871F934D184E8C4A00AEF649 /* NewServiceVC.h */,
+				871F934E184E8C4A00AEF649 /* NewServiceVC.m */,
+			);
+			name = NewService;
+			sourceTree = "<group>";
+		};
+		871F9350184E8C5200AEF649 /* NewClient */ = {
+			isa = PBXGroup;
+			children = (
+				871F9351184E8C7100AEF649 /* NewClientVC.h */,
+				871F9352184E8C7100AEF649 /* NewClientVC.m */,
+			);
+			name = NewClient;
+			sourceTree = "<group>";
+		};
+		871F9354184E8C7B00AEF649 /* NewDolz */ = {
+			isa = PBXGroup;
+			children = (
+				871F9355184E8C9700AEF649 /* NewDolzVC.h */,
+				871F9356184E8C9700AEF649 /* NewDolzVC.m */,
+			);
+			name = NewDolz;
+			sourceTree = "<group>";
+		};
+		871F9358184E8CAD00AEF649 /* NewContract */ = {
+			isa = PBXGroup;
+			children = (
+				871F9359184E8CCB00AEF649 /* NewContractVC.h */,
+				871F935A184E8CCB00AEF649 /* NewContractVC.m */,
+			);
+			name = NewContract;
+			sourceTree = "<group>";
+		};
+		871F935C184E8CFD00AEF649 /* NewWorker */ = {
+			isa = PBXGroup;
+			children = (
+				871F935D184E8D2900AEF649 /* NewWorkerVC.h */,
+				871F935E184E8D2900AEF649 /* NewWorkerVC.m */,
+			);
+			name = NewWorker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,6 +428,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = MyCompany;
 				TargetAttributes = {
+					871F92B8184E3E9800AEF649 = {
+						DevelopmentTeam = K9478MT2CB;
+					};
 					871F92D9184E3E9800AEF649 = {
 						TestTargetID = 871F92B8184E3E9800AEF649;
 					};
@@ -291,15 +481,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				872860B7184FBCEA0006375D /* Service.m in Sources */,
+				872860AE184FBCEA0006375D /* Dolz.m in Sources */,
+				871F9319184E6FE800AEF649 /* NewBaseVC.m in Sources */,
+				871F9353184E8C7100AEF649 /* NewClientVC.m in Sources */,
+				872860B4184FBCEA0006375D /* Tarifs.m in Sources */,
 				871F92CD184E3E9800AEF649 /* AppDelegate.m in Sources */,
+				872860A8184FBCEA0006375D /* Worker.m in Sources */,
+				871F9347184E8BDD00AEF649 /* NewEquipmentVC.m in Sources */,
+				871F9357184E8C9700AEF649 /* NewDolzVC.m in Sources */,
 				871F92C9184E3E9800AEF649 /* main.m in Sources */,
+				872860AB184FBCEA0006375D /* Office.m in Sources */,
+				871F934F184E8C4A00AEF649 /* NewServiceVC.m in Sources */,
 				871F9303184E423D00AEF649 /* BDEfanov.xcdatamodeld in Sources */,
-				871F930C184E424C00AEF649 /* Office.m in Sources */,
-				871F9309184E424C00AEF649 /* Contract.m in Sources */,
+				871F935B184E8CCB00AEF649 /* NewContractVC.m in Sources */,
+				872860A2184FBCEA0006375D /* Contract.m in Sources */,
+				871F9326184E706B00AEF649 /* NewTariffVC.m in Sources */,
+				872860A5184FBCEA0006375D /* Client.m in Sources */,
+				871F935F184E8D2900AEF649 /* NewWorkerVC.m in Sources */,
+				872860BD184FBFA50006375D /* Application.m in Sources */,
+				871F934B184E8C1900AEF649 /* NewApplicationVC.m in Sources */,
+				871F9325184E706B00AEF649 /* NewOfficeVC.m in Sources */,
+				872860B1184FBCEA0006375D /* Equipment.m in Sources */,
 				871F92F7184E410A00AEF649 /* DetailViewController.m in Sources */,
 				871F92F8184E410A00AEF649 /* EnterVC.m in Sources */,
 				871F92FC184E415500AEF649 /* MasterViewController.m in Sources */,
-				871F9306184E424B00AEF649 /* Tarifs.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,6 +716,7 @@
 				871F92ED184E3E9900AEF649 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		871F92EE184E3E9900AEF649 /* Build configuration list for PBXNativeTarget "BDEfanovTests" */ = {
 			isa = XCConfigurationList;
@@ -518,6 +725,7 @@
 				871F92F0184E3E9900AEF649 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

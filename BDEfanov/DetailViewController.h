@@ -11,14 +11,12 @@
 @interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>{
     IBOutlet UITableView *myTable;
     IBOutlet UIButton *btn;
-    IBOutlet UINavigationItem *navigationItem;
     UIPopoverController *myPopover;
 }
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 -(void) closePopover;
-
 -(IBAction)btnNew:(id)sender;
 -(IBAction)btnExit:(id)sender;
 -(void) configureView;

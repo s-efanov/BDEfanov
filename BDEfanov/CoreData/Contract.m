@@ -2,7 +2,7 @@
 //  Contract.m
 //  BDEfanov
 //
-//  Created by Сергей on 03.12.13.
+//  Created by Сергей on 04.12.13.
 //  Copyright (c) 2013 MyCompany. All rights reserved.
 //
 
@@ -11,7 +11,11 @@
 
 @implementation Contract
 
+@dynamic idClient;
 @dynamic idContract;
+@dynamic idEquipment;
 @dynamic idOffice;
+@dynamic idTarif;
+@dynamic idWorker;
 
 @end

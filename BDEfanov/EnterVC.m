@@ -29,8 +29,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    customer = @[@"Администратор", @"Сотрудник Call-ценра", @"Тех. поддержка", @"Сотрудник офиса"];
-    users = @[@"admin", @"callWorker", @"techWorker", @"officeWorker"];
+    customer = @[@"Администратор", @"Сотрудник Call-ценра", @"Тех. поддержка", @"Сотрудник офиса", @"Отдел кадров"];
+    users = @[@"admin", @"callWorker", @"techWorker", @"officeWorker", @"cadrWorker"];
     ((AppDelegate *)[[UIApplication sharedApplication] delegate]).user = users[0];
 	// Do any additional setup after loading the view.
 }

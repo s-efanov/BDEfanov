@@ -7,9 +7,20 @@
 //
 
 #import "AppDelegate.h"
+#import "NewBaseVC.h"
 #import "DetailViewController.h"
 #import "Constants.h"
 #import "EnterVC.h"
+
+#import "Office.h"
+#import "Contract.h"
+#import "Tarifs.h"
+#import "Worker.h"
+#import "Dolz.h"
+#import "Service.h"
+#import "Application.h"
+#import "Equipment.h"
+#import "Client.h"
 
 @interface DetailViewController (){
     UIPopoverController *popover;
@@ -39,6 +50,10 @@
     }        
 }
 
+-(void) controllerDidChangeContent:(NSFetchedResultsController *)controller{
+    [myTable reloadData];
+}
+
 -(IBAction)btnExit:(id)sender{
     UIWindow *window = [UIApplication sharedApplication].keyWindow;;
     
@@ -57,12 +72,64 @@
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         cell.textLabel.font = [UIFont boldSystemFontOfSize: 14];
     }
+    
+    NSString *str = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).entity;
+    NSString *labelForRow;
+    
+    if([str isEqualToString:MY_OFFICE]){
+        Office *office = [self.fetchedResultsController fetchedObjects][indexPath.row];
+        labelForRow = office.name;
+    }
+    
+    if([str isEqualToString:MY_SERVICE]){
+        Service *service = [self.fetchedResultsController fetchedObjects][indexPath.row];
+        labelForRow = service.name;
+    }
+    
+    if([str isEqualToString:MY_TARIFF]){
+        Tarifs *tarifs = [self.fetchedResultsController fetchedObjects][indexPath.row];
+        labelForRow = tarifs.name;
+    }
+    
+    if([str isEqualToString:MY_EQUIPMENT]){
+        Equipment *equipment = [self.fetchedResultsController fetchedObjects][indexPath.row];
+        labelForRow = equipment.model;
+    }
+    
+    if([str isEqualToString:MY_CLIENT]){
+        Client *client = [self.fetchedResultsController fetchedObjects][indexPath.row];
+        labelForRow = client.lastName;
+    }
+    
+    if([str isEqualToString:MY_WORKER]){
+        Worker *worker = [self.fetchedResultsController fetchedObjects][indexPath.row];
+        labelForRow = worker.name;
+    }
+    
+    if([str isEqualToString:MY_APPLICATION]){
+        Application *application = [self.fetchedResultsController fetchedObjects][indexPath.row];
+        labelForRow = application.idApplication.stringValue;
+    }
+    
+    if([str isEqualToString:MY_CONTRACT]){
+        Contract *contract = [self.fetchedResultsController fetchedObjects][indexPath.row];
+        labelForRow = contract.idContract.stringValue;
+    }
+    
+    if([str isEqualToString:MY_DOLZ]){
+        Dolz *dolz = [self.fetchedResultsController fetchedObjects][indexPath.row];
+        labelForRow = dolz.nameDolz;
+    }
+    
+    cell.textLabel.text = labelForRow;
+    
     return cell;
 }
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
-    if (_fetchedResultsController != nil) {
+    NSString *str = [[_fetchedResultsController fetchRequest] entityName];
+    if (_fetchedResultsController != nil && [str isEqualToString:myEntity]) {
         return _fetchedResultsController;
     }
     
@@ -97,6 +164,10 @@
     return _fetchedResultsController;
 }
 
+-(void) closePopover{
+    [popover dismissPopoverAnimated:YES];
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
@@ -119,8 +190,48 @@
 }
 
 -(IBAction)btnNew:(id)sender{
+    NSString *str = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).entity;
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newOffice"];
+     NewBaseVC *viewContr;
+    
+    if([str isEqualToString:MY_OFFICE]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newOffice"];
+    }
+    
+    if([str isEqualToString:MY_SERVICE]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newService"];
+    }
+    
+    if([str isEqualToString:MY_TARIFF]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newTariff"];
+    }
+    
+    if([str isEqualToString:MY_EQUIPMENT]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newEquipment"];
+    }
+    
+    if([str isEqualToString:MY_CLIENT]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newClient"];
+    }
+    
+    if([str isEqualToString:MY_WORKER]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newWorker"];
+    }
+    
+    if([str isEqualToString:MY_APPLICATION]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newApplication"];
+    }
+    
+    if([str isEqualToString:MY_CONTRACT]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newContract"];
+    }
+    
+    if([str isEqualToString:MY_DOLZ]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newDolz"];
+    }
+    
+    viewContr.delegate = self;
+    viewContr.fetchedResultsController = self.fetchedResultsController;
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewContr];
     popover = [[UIPopoverController alloc] initWithContentViewController:navigationController];
@@ -139,45 +250,60 @@
 - (void)configureView
 {
     NSString *str = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).entity;
+    self.navigationItem.title = str;
     
     if([str isEqualToString:MY_OFFICE]){
         myEntity = TABLE_OFFICE;
+        btn.titleLabel.text = @"Новый офис";
         sort = @"name";
     }
 
     if([str isEqualToString:MY_SERVICE]){
         myEntity = TABLE_SERVICE;
+        btn.titleLabel.text = @"Новая услуга";
         sort = @"name";
     }
     
     if([str isEqualToString:MY_TARIFF]){
         myEntity = TABLE_TARIFF;
+        btn.titleLabel.text = @"Новый тариф";
         sort = @"name";
     }
 
     if([str isEqualToString:MY_EQUIPMENT]){
         myEntity = TABLE_EQUIPMENT;
-        sort = @"name";
+        btn.titleLabel.text = @"Новое оборудование";
+        sort = @"model";
     }
     
     if([str isEqualToString:MY_CLIENT]){
         myEntity = TABLE_CLIENT;
+        btn.titleLabel.text = @"Новый клиент";
         sort = @"name";
     }
     
     if([str isEqualToString:MY_WORKER]){
         myEntity = TABLE_WORKER;
+        btn.titleLabel.text = @"Новый сотрудник";
         sort = @"name";
     }
     
     if([str isEqualToString:MY_APPLICATION]){
         myEntity = TABLE_APPLICATION;
-        sort = @"name";
+        btn.titleLabel.text = @"Новая заявка";
+        sort = @"descriptioncontract";
     }
     
     if([str isEqualToString:MY_CONTRACT]){
         myEntity = TABLE_CONTRACT;
-        sort = @"name";
+        btn.titleLabel.text = @"Новый договор";
+        sort = @"idContract";
+    }
+    
+    if([str isEqualToString:MY_DOLZ]){
+        myEntity = TABLE_DOLZ;
+        btn.titleLabel.text = @"Новая должность";
+        sort = @"idDolz";
     }
     
     [myTable reloadData];

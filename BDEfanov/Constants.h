@@ -8,6 +8,7 @@
 #define MY_EQUIPMENT @"Оборудование"
 #define MY_APPLICATION @"Заявки"
 #define MY_CONTRACT @"Договоры"
+#define MY_DOLZ @"Должности"
 
 #define TABLE_OFFICE @"Office"
 #define TABLE_TARIFF @"Tarifs"
@@ -17,3 +18,4 @@
 #define TABLE_EQUIPMENT @"Equipment"
 #define TABLE_APPLICATION @"Application"
 #define TABLE_CONTRACT @"Contract"
+#define TABLE_DOLZ @"Dolz"
