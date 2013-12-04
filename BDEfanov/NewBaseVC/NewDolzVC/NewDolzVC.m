@@ -8,8 +8,12 @@
 
 #import "NewDolzVC.h"
 #import "Office.h"
+#import "Dolz.h"
 
-@interface NewDolzVC ()
+@interface NewDolzVC (){
+    NSArray *offices;
+    NSString *nameOffice;
+}
 
 @end
 
@@ -27,7 +31,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	offices = [Office MR_findAll];
 }
 
 -(IBAction)btnSave:(id)sender{
@@ -40,7 +44,11 @@
     [dolz setValue:[NSNumber numberWithInteger:1] forKey:@"idDolz"];
     [dolz setValue:[NSNumber numberWithInteger:textFieldCost.text.integerValue] forKey:@"cost"];
     [dolz setValue:textFieldName.text forKey:@"nameDolz"];
-    //[dolz setValue:[NSNumber numberWithInteger:pickerOffice.text.integerValue] forKey:@"idOffice"];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", nameOffice];
+    Office *office = [Office MR_findAllWithPredicate:predicate][0];
+    [dolz setValue:office.idOffice forKey:@"idOffice"];
+    
     [dolz setValue:textFieldWork.text forKey:@"work"];
     
     [context save:nil];
@@ -48,21 +56,21 @@
     [self.delegate closePopover];
 }
 
-/*-(NSInteger) numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+-(NSInteger) numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     return 1;
 }
 
 -(NSInteger) pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    return customer.count;
+    return offices.count;
 }
 
 -(NSString *) pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    return customer[row];
+    return ((Office*)offices[row]).name;
 }
 
 -(void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    ((AppDelegate *)[[UIApplication sharedApplication] delegate]).user = users[row];
-}*/
+   nameOffice = ((Office*)offices[row]).name;
+}
 
 - (void)didReceiveMemoryWarning
 {
