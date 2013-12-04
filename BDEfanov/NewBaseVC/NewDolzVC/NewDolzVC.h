@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "NewBaseVC.h"
 
-@interface NewDolzVC : NewBaseVC{
-    IBOutlet UITextField *textFieldOffice;
+@interface NewDolzVC : NewBaseVC<UIPickerViewDataSource, UIPickerViewDelegate>{
+    IBOutlet UIPickerView *pickerOffice;
     IBOutlet UITextField *textFieldWork;
     IBOutlet UITextField *textFieldName;
     IBOutlet UITextField *textFieldCost;

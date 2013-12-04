@@ -7,6 +7,7 @@
 //
 
 #import "NewDolzVC.h"
+#import "Office.h"
 
 @interface NewDolzVC ()
 
@@ -39,13 +40,29 @@
     [dolz setValue:[NSNumber numberWithInteger:1] forKey:@"idDolz"];
     [dolz setValue:[NSNumber numberWithInteger:textFieldCost.text.integerValue] forKey:@"cost"];
     [dolz setValue:textFieldName.text forKey:@"nameDolz"];
-    [dolz setValue:[NSNumber numberWithInteger:textFieldOffice.text.integerValue] forKey:@"idOffice"];
+    //[dolz setValue:[NSNumber numberWithInteger:pickerOffice.text.integerValue] forKey:@"idOffice"];
     [dolz setValue:textFieldWork.text forKey:@"work"];
     
     [context save:nil];
     
     [self.delegate closePopover];
 }
+
+/*-(NSInteger) numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+
+-(NSInteger) pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    return customer.count;
+}
+
+-(NSString *) pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    return customer[row];
+}
+
+-(void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    ((AppDelegate *)[[UIApplication sharedApplication] delegate]).user = users[row];
+}*/
 
 - (void)didReceiveMemoryWarning
 {
