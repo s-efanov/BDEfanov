@@ -4,7 +4,7 @@
         <attribute name="closed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="descriptioncontract" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="idApplication" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="idContract" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="parentContract" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contract" inverseName="dotApplication" inverseEntity="Contract" syncable="YES"/>
     </entity>
     <entity name="Client" representedClassName="Client" syncable="YES">
         <attribute name="adress" optional="YES" attributeType="String" syncable="YES"/>
@@ -13,29 +13,32 @@
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="otec" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="parentContract" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Contract" inverseName="parentClient" inverseEntity="Contract" syncable="YES"/>
     </entity>
     <entity name="Contract" representedClassName="Contract" syncable="YES">
-        <attribute name="idClient" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="idContract" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="idEquipment" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="idOffice" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="idService" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="idTarif" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="idWorker" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="dotApplication" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Application" inverseName="parentContract" inverseEntity="Application" syncable="YES"/>
+        <relationship name="parentClient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="parentContract" inverseEntity="Client" syncable="YES"/>
+        <relationship name="parentEquipment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equipment" inverseName="contract" inverseEntity="Equipment" syncable="YES"/>
+        <relationship name="parentOffice" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Office" inverseName="contract" inverseEntity="Office" syncable="YES"/>
+        <relationship name="parentService" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Service" inverseName="contract" inverseEntity="Service" syncable="YES"/>
+        <relationship name="parentTarif" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tarifs" inverseName="contract" inverseEntity="Tarifs" syncable="YES"/>
+        <relationship name="parentWorker" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Worker" inverseName="contract" inverseEntity="Worker" syncable="YES"/>
     </entity>
     <entity name="Dolz" representedClassName="Dolz" syncable="YES">
         <attribute name="cost" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="idDolz" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="idOffice" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="nameDolz" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="work" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="toOffice" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Office" inverseName="toDolz" inverseEntity="Office" syncable="YES"/>
+        <relationship name="dotWorker" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Worker" inverseName="parentDolz" inverseEntity="Worker" syncable="YES"/>
+        <relationship name="parentOffice" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Office" inverseName="dotDolz" inverseEntity="Office" syncable="YES"/>
     </entity>
     <entity name="Equipment" representedClassName="Equipment" syncable="YES">
         <attribute name="firm" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="idEquipment" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="model" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="scancode" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="contract" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Contract" inverseName="parentEquipment" inverseEntity="Contract" syncable="YES"/>
     </entity>
     <entity name="Limits" representedClassName="Limits" syncable="YES">
         <attribute name="limApplication" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -54,24 +57,25 @@
         <attribute name="index" optional="YES" attributeType="Integer 32" defaultValueString="0.0" syncable="YES"/>
         <attribute name="info" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="toDolz" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Dolz" inverseName="toOffice" inverseEntity="Dolz" syncable="YES"/>
+        <relationship name="contract" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Contract" inverseName="parentOffice" inverseEntity="Contract" syncable="YES"/>
+        <relationship name="dotDolz" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Dolz" inverseName="parentOffice" inverseEntity="Dolz" syncable="YES"/>
     </entity>
     <entity name="Service" representedClassName="Service" syncable="YES">
         <attribute name="cost" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="idService" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="contract" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Contract" inverseName="parentService" inverseEntity="Contract" syncable="YES"/>
     </entity>
     <entity name="Tarifs" representedClassName="Tarifs" syncable="YES">
         <attribute name="cost" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="idTariff" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="speed" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contract" syncable="YES"/>
+        <relationship name="contract" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Contract" inverseName="parentTarif" inverseEntity="Contract" syncable="YES"/>
     </entity>
     <entity name="Worker" representedClassName="Worker" syncable="YES">
         <attribute name="adress" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="birthdate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="idDolz" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="idWorker" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="lastname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="med" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -79,17 +83,19 @@
         <attribute name="otec" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="passeport" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tel" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="contract" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Contract" inverseName="parentWorker" inverseEntity="Contract" syncable="YES"/>
+        <relationship name="parentDolz" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dolz" inverseName="dotWorker" inverseEntity="Dolz" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Application" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="Client" positionX="0" positionY="0" width="128" height="135"/>
-        <element name="Contract" positionX="340" positionY="84" width="128" height="150"/>
-        <element name="Dolz" positionX="-9" positionY="153" width="128" height="133"/>
-        <element name="Equipment" positionX="-0" positionY="-126" width="128" height="105"/>
-        <element name="Limits" positionX="-180" positionY="45" width="128" height="180"/>
-        <element name="Office" positionX="169" positionY="-46" width="128" height="118"/>
-        <element name="Service" positionX="-135" positionY="-72" width="128" height="90"/>
-        <element name="Tarifs" positionX="214" positionY="78" width="128" height="120"/>
-        <element name="Worker" positionX="351" positionY="-126" width="128" height="195"/>
+        <element name="Application" positionX="196" positionY="-465" width="128" height="105"/>
+        <element name="Client" positionX="214" positionY="-333" width="128" height="148"/>
+        <element name="Contract" positionX="-315" positionY="-270" width="128" height="163"/>
+        <element name="Dolz" positionX="-155" positionY="-594" width="128" height="133"/>
+        <element name="Equipment" positionX="79" positionY="-171" width="128" height="118"/>
+        <element name="Limits" positionX="-387" positionY="-81" width="128" height="180"/>
+        <element name="Office" positionX="-126" positionY="-409" width="128" height="148"/>
+        <element name="Service" positionX="-207" positionY="-9" width="128" height="103"/>
+        <element name="Tarifs" positionX="70" positionY="-37" width="128" height="118"/>
+        <element name="Worker" positionX="-333" positionY="-594" width="128" height="195"/>
     </elements>
 </model>

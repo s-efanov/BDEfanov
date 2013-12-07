@@ -2,11 +2,13 @@
 //  Worker.m
 //  BDEfanov
 //
-//  Created by Сергей on 04.12.13.
+//  Created by Ефанов Сергей on 08.12.13.
 //  Copyright (c) 2013 MyCompany. All rights reserved.
 //
 
 #import "Worker.h"
+#import "Contract.h"
+#import "Dolz.h"
 
 
 @implementation Worker
@@ -20,6 +22,7 @@
 @dynamic otec;
 @dynamic passeport;
 @dynamic tel;
-@dynamic idDolz;
+@dynamic parentDolz;
+@dynamic contract;
 
 @end

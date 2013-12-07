@@ -32,6 +32,12 @@
 {
     [super viewDidLoad];
 	limits = [Limits MR_findAll][0];
+    
+    if(self.object){
+        textFieldNameTariff.text = ((Tarifs*)self.object).name;
+        textFieldSpeed.text = ((Tarifs*)self.object).speed.stringValue;
+        textFieldCost.text = ((Tarifs*)self.object).cost.stringValue;
+    }
 }
 
 -(IBAction)btnSave:(id)sender{
@@ -43,12 +49,15 @@
         [al show];
         return;
     }
-    Tarifs *tarif = [Tarifs MR_createEntity];
     
-    tarif.idTariff = [limits nextTarifsId];
-    tarif.name = textFieldNameTariff.text;
-    tarif.cost = [NSNumber numberWithInteger:textFieldCost.text.integerValue];
-    tarif.speed = [NSNumber numberWithInteger:textFieldSpeed.text.integerValue];
+    if(!self.object){
+        self.object = [Tarifs MR_createEntity];
+        ((Tarifs*)self.object).idTariff = [limits nextTarifsId];
+    }
+    
+    ((Tarifs*)self.object).name = textFieldNameTariff.text;
+    ((Tarifs*)self.object).cost = [NSNumber numberWithInteger:textFieldCost.text.integerValue];
+    ((Tarifs*)self.object).speed = [NSNumber numberWithInteger:textFieldSpeed.text.integerValue];
     
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     

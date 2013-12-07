@@ -38,6 +38,12 @@
     
     if(offices.count)
         nameOffice = ((Office*)offices[0]).name;
+    
+    if(self.object){
+        textFieldName.text = ((Dolz*)self.object).nameDolz;
+        textFieldWork.text = ((Dolz*)self.object).work;
+        textFieldCost.text = ((Dolz*)self.object).cost.stringValue;
+    }
 }
 
 -(IBAction)btnSave:(id)sender{
@@ -49,17 +55,23 @@
         [al show];
         return;
     }
-    Dolz *dolz = [Dolz MR_createEntity];
     
-    dolz.idDolz = [limits nextDolzId];
-    dolz.cost = [NSNumber numberWithInteger:textFieldCost.text.integerValue];
-    dolz.nameDolz = textFieldName.text;
+    if(!self.object){
+        self.object = [Dolz MR_createEntity];
+        ((Dolz*)self.object).idDolz = [limits nextDolzId];
+    }
+    
+    ((Dolz*)self.object).cost = [NSNumber numberWithInteger:textFieldCost.text.integerValue];
+    ((Dolz*)self.object).nameDolz = textFieldName.text;
+    ((Dolz*)self.object).work = textFieldWork.text;
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", nameOffice];
     Office *office = [Office MR_findAllWithPredicate:predicate][0];
-    dolz.idOffice = office.idOffice;
+    ((Dolz*)self.object).parentOffice = office;
     
-    dolz.work = textFieldWork.text;
+    if(!self.object){
+        [office addDotDolzObject:((Dolz*)self.object)];
+    }
     
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     

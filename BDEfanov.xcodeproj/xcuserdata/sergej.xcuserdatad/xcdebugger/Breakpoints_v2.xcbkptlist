@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BDEfanov/DetailViewController.m"
-            timestampString = "408140511.925274"
+            timestampString = "408148131.041321"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "394"
-            endingLineNumber = "394"
+            startingLineNumber = "364"
+            endingLineNumber = "364"
             landmarkName = "-configureView"
             landmarkType = "5">
          </BreakpointContent>

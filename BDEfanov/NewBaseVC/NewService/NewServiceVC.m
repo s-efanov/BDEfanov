@@ -31,6 +31,11 @@
 {
     [super viewDidLoad];
 	limits = [Limits MR_findAll][0];
+    
+    if(self.object){
+        textFieldCost.text = ((Service*)self.object).cost.stringValue;
+        textFieldName.text = ((Service*)self.object).name;
+    }
 }
 
 -(IBAction)btnSave:(id)sender{
@@ -43,12 +48,13 @@
         return;
     }
     
-    Service *service = [Service MR_createEntity];
+    if(!self.object){
+        self.object = [Service MR_createEntity];
+        ((Service*)self.object).idService = [limits nextServiceId];
+    }
     
-    
-    service.idService = [limits nextServiceId];
-    service.name = textFieldName.text;
-    service.cost = [NSNumber numberWithInteger:textFieldCost.text.integerValue];
+    ((Service*)self.object).name = textFieldName.text;
+    ((Service*)self.object).cost = [NSNumber numberWithInteger:textFieldCost.text.integerValue];
     
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     

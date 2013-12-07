@@ -2,13 +2,14 @@
 //  Client.h
 //  BDEfanov
 //
-//  Created by Сергей on 04.12.13.
+//  Created by Ефанов Сергей on 08.12.13.
 //  Copyright (c) 2013 MyCompany. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Contract;
 
 @interface Client : NSManagedObject
 
@@ -18,5 +19,6 @@
 @property (nonatomic, retain) NSString * lastName;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * otec;
+@property (nonatomic, retain) Contract *parentContract;
 
 @end

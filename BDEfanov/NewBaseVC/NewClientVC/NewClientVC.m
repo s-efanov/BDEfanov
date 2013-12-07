@@ -31,6 +31,13 @@
 {
     [super viewDidLoad];
 	limits = [Limits MR_findAll][0];
+    
+    if(self.object){
+        textFieldName.text = ((Client*)self.object).name;
+        textFieldOtec.text = ((Client*)self.object).otec;
+        textFieldLastName.text = ((Client*)self.object).lastName;
+        textFieldAdress.text = ((Client*)self.object).adress;
+    }
 }
 
 -(IBAction)btnSave:(id)sender{
@@ -43,14 +50,16 @@
         return;
     }
     
-    Client *client = [Client MR_createEntity];
+    if(!self.object){
+        self.object = [Client MR_createEntity];
+        ((Client*)self.object).idClient = [limits nextClientId];
+    }
     
-    client.idClient = [limits nextClientId];
-    client.adress = textFieldAdress.text;
-    client.birthdate = birthDate.date;
-    client.name = textFieldName.text;
-    client.lastName = textFieldLastName.text;
-    client.otec = textFieldOtec.text;
+    ((Client*)self.object).adress = textFieldAdress.text;
+    ((Client*)self.object).birthdate = birthDate.date;
+    ((Client*)self.object).name = textFieldName.text;
+    ((Client*)self.object).lastName = textFieldLastName.text;
+    ((Client*)self.object).otec = textFieldOtec.text;
     
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     

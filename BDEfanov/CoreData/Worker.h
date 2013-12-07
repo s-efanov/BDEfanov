@@ -2,13 +2,14 @@
 //  Worker.h
 //  BDEfanov
 //
-//  Created by Сергей on 04.12.13.
+//  Created by Ефанов Сергей on 08.12.13.
 //  Copyright (c) 2013 MyCompany. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Contract, Dolz;
 
 @interface Worker : NSManagedObject
 
@@ -21,6 +22,7 @@
 @property (nonatomic, retain) NSString * otec;
 @property (nonatomic, retain) NSString * passeport;
 @property (nonatomic, retain) NSNumber * tel;
-@property (nonatomic, retain) NSNumber * idDolz;
+@property (nonatomic, retain) Dolz *parentDolz;
+@property (nonatomic, retain) Contract *contract;
 
 @end

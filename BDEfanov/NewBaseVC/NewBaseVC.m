@@ -14,7 +14,7 @@
 @end
 
 @implementation NewBaseVC
-@synthesize delegate;
+@synthesize delegate, object;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

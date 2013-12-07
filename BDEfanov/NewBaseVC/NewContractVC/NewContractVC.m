@@ -58,7 +58,7 @@
     limits = [Limits MR_findAll][0];
     
     if(equipments.count)
-        tarifName = ((Tarifs*)tarifs[0]).name;
+        equipmentModel = ((Equipment*)equipments[0]).model;
     
     if(clients.count)
         clientName = ((Client*)clients[0]).name;
@@ -86,39 +86,40 @@
         return;
     }
     
-    Contract *contract = [Contract MR_createEntity];
-    
-    contract.idContract = [limits nextContractId];
+    if(!self.object){
+        self.object = [Contract MR_createEntity];
+        ((Contract*)self.object).idContract = [limits nextContractId];
+    }
     
     //Заполняем id клиента
     NSPredicate *clientPredicate = [NSPredicate predicateWithFormat:@"name = %@", clientName];
     NSArray *myClient = [Client MR_findAllWithPredicate:clientPredicate];
-    contract.idClient = ((Client*)myClient[0]).idClient;
+    ((Contract*)self.object).parentClient = myClient[0];
     
     //заполняем id роутера
     NSPredicate *equipmentPredicate = [NSPredicate predicateWithFormat:@"model = %@", equipmentModel];
     NSArray *myEquipment = [Equipment MR_findAllWithPredicate:equipmentPredicate];
-    contract.idEquipment = ((Equipment*)myEquipment[0]).idEquipment;
+    ((Contract*)self.object).parentEquipment = myEquipment[0];
     
     //заполняем id офиса
     NSPredicate *officePredicate = [NSPredicate predicateWithFormat:@"name = %@", nameOffice];
     NSArray *myOffice = [Office MR_findAllWithPredicate:officePredicate];
-    contract.idOffice = ((Office*)myOffice[0]).idOffice;
+    ((Contract*)self.object).parentOffice = myOffice[0];
     
     //заполняем id тарифа
     NSPredicate *tarifPredicate = [NSPredicate predicateWithFormat:@"name = %@", tarifName];
     NSArray *myTarif = [Tarifs MR_findAllWithPredicate:tarifPredicate];
-    contract.idTarif = ((Tarifs*)myTarif[0]).idTariff;
+    ((Contract*)self.object).parentTarif = myTarif[0];
     
     //заполняем id работника
     NSPredicate *workerPredicate = [NSPredicate predicateWithFormat:@"name = %@", workerName];
     NSArray *myWorker = [Worker MR_findAllWithPredicate:workerPredicate];
-    contract.idWorker = ((Worker*)myWorker[0]).idWorker;
+    ((Contract*)self.object).parentWorker = myWorker[0];
     
     //заполняем id услуги
     NSPredicate *servicePredicate = [NSPredicate predicateWithFormat:@"name = %@", serviceName];
     NSArray *myService = [Service MR_findAllWithPredicate:servicePredicate];
-    contract.idService =  ((Service*)myService[0]).idService;
+    [((Contract*)self.object) addParentServiceObject: myService[0]];
     
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     

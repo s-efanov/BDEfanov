@@ -30,13 +30,14 @@
         return;
     }
     
-    Office *office = [Office MR_createEntity];
-    
-    office.idOffice = [limits nextOfficeId];
-    office.name = textFieldNameOffice.text;
-    office.adress = textFieldAdress.text;
-    office.index = [NSNumber numberWithInteger:textFieldIndex.text.integerValue];
-    office.info = textFieldInfo.text;
+    if(!self.object){
+        self.object = [Office MR_createEntity];
+        ((Office*)self.object).idOffice = [limits nextOfficeId];
+    }
+    ((Office*)self.object).name = textFieldNameOffice.text;
+    ((Office*)self.object).adress = textFieldAdress.text;
+    ((Office*)self.object).index = [NSNumber numberWithInteger:textFieldIndex.text.integerValue];
+    ((Office*)self.object).info = textFieldInfo.text;
     
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
@@ -69,6 +70,13 @@
 {
     [super viewDidLoad];
     limits = [Limits MR_findAll][0];
+    
+    if(self.object){
+        textFieldAdress.text = ((Office*)self.object).adress;
+        textFieldIndex.text = ((Office*)self.object).index.stringValue;
+        textFieldInfo.text = ((Office*)self.object).info;
+        textFieldNameOffice.text = ((Office*)self.object).name;
+    }
 }
 
 - (void)didReceiveMemoryWarning

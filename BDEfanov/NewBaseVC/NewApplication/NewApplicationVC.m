@@ -13,7 +13,7 @@
 
 @interface NewApplicationVC (){
     NSArray *contracts;
-    NSString *idContract;
+    Contract *contract;
     Limits *limits;
 }
 
@@ -37,7 +37,11 @@
     limits = [Limits MR_findAll][0];
     
     if(contracts.count)
-        idContract = ((Contract*)contracts[0]).idContract.stringValue;
+        contract = contracts[0];
+    
+    if(self.object){
+        textFieldDescription.text = ((Application*)self.object).descriptioncontract;
+    }
 }
 
 -(IBAction)btnSave:(id)sender{
@@ -50,12 +54,14 @@
         return;
     }
 
-    Application *application = [Application MR_createEntity];
+    if(!self.object){
+        self.object = [Application MR_createEntity];
+        ((Application*)self.object).idApplication = [limits nextApplicationId];
+    }
     
-    application.idApplication = [limits nextApplicationId];
-    application.idContract = [NSNumber numberWithInteger:idContract.integerValue];
-    application.descriptioncontract = textFieldDescription.text;
-    application.closed = [NSNumber numberWithBool:switchClosed.on];
+    ((Application*)self.object).parentContract = contract;
+    ((Application*)self.object).descriptioncontract = textFieldDescription.text;
+    ((Application*)self.object).closed = [NSNumber numberWithBool:switchClosed.on];
     
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
@@ -89,7 +95,7 @@
 }
 
 -(void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    idContract = ((Contract*)contracts[row]).idContract.stringValue;
+    contract = contracts[row];
 }
 
 - (void)didReceiveMemoryWarning

@@ -127,16 +127,7 @@
         [labelForRow appendString:worker.otec];
         [labelForRow appendString:@" "];
         
-        NSPredicate *predicateDolz = [NSPredicate predicateWithFormat:@"idDolz = %@", worker.idDolz];
-        
-        NSArray *myDolz = [Dolz MR_findAllWithPredicate:predicateDolz];
-        
-        if(!myDolz.count){
-            NSLog(@"У сотрудника не назначена должность");
-        }
-        
-        Dolz *dolz = [Dolz MR_findAllWithPredicate:predicateDolz][0];
-        [labelForRow appendString:dolz.nameDolz];
+        [labelForRow appendString:worker.parentDolz.nameDolz];
     }
     
     if([str isEqualToString:MY_APPLICATION]){
@@ -144,7 +135,7 @@
         [labelForRow appendString:@"Заявка: "];
         [labelForRow appendString: application.idApplication.stringValue];
         [labelForRow appendString:@" по договору "];
-        [labelForRow appendString:application.idContract.stringValue];
+        [labelForRow appendString:application.parentContract.idContract.stringValue];
     }
     
     if([str isEqualToString:MY_CONTRACT]){
@@ -152,40 +143,19 @@
         [labelForRow appendString:@"№ "];
         [labelForRow appendString: contract.idContract.stringValue];
         
-        NSPredicate *predicateClient = [NSPredicate predicateWithFormat:@"idClient = %@", contract.idClient];
-        
-        NSArray *myClient = [Client MR_findAllWithPredicate:predicateClient];
-        
-        if(!myClient.count){
-            NSLog(@"У договора нет клиента");
-        }
-        
-        Client *client = myClient[0];
-        
         [labelForRow appendString:@" "];
-        [labelForRow appendString:client.lastName];
+        [labelForRow appendString:contract.parentClient.lastName];
         [labelForRow appendString:@" "];
-        [labelForRow appendString:client.name];
+        [labelForRow appendString:contract.parentClient.name];
         [labelForRow appendString:@" "];
-        [labelForRow appendString:client.otec];
+        [labelForRow appendString:contract.parentClient.otec];
     }
     
     if([str isEqualToString:MY_DOLZ]){
         Dolz *dolz = [Dolz MR_findAll][indexPath.row];
         [labelForRow appendString: dolz.nameDolz];
         [labelForRow appendString:@" "];
-        
-        NSPredicate *predicateOffice = [NSPredicate predicateWithFormat:@"idOffice = %@", dolz.idOffice];
-        
-        NSArray *myOffice = [Office MR_findAllWithPredicate:predicateOffice];
-        
-        if(!myOffice.count){
-            NSLog(@"У должности нет офиса");
-        }
-        
-        Office *office = myOffice[0];
-        
-        [labelForRow appendString: office.name];
+        [labelForRow appendString: dolz.parentOffice.name];
     }
     
     cell.textLabel.text = labelForRow;
@@ -452,6 +422,62 @@
     //if (self.detailItem) {
     //    self.detailDescriptionLabel.text = [[self.detailItem valueForKey:@"timeStamp"] description];
     //}
+}
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *str = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).entity;
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    NewBaseVC *viewContr;
+    
+    if([str isEqualToString:MY_OFFICE]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newOffice"];
+        viewContr.object = [Office MR_findAll][indexPath.row];
+        
+    }
+    
+    if([str isEqualToString:MY_SERVICE]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newService"];
+        viewContr.object = [Service MR_findAll][indexPath.row];
+    }
+    
+    if([str isEqualToString:MY_TARIFF]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newTariff"];
+        viewContr.object = [Tarifs MR_findAll][indexPath.row];
+    }
+    
+    if([str isEqualToString:MY_EQUIPMENT]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newEquipment"];
+        viewContr.object = [Equipment MR_findAll][indexPath.row];
+    }
+    
+    if([str isEqualToString:MY_CLIENT]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newClient"];
+        viewContr.object = [Client MR_findAll][indexPath.row];
+    }
+    
+    if([str isEqualToString:MY_WORKER]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newWorker"];
+        viewContr.object = [Worker MR_findAll][indexPath.row];
+    }
+    
+    if([str isEqualToString:MY_APPLICATION]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newApplication"];
+    }
+    
+    if([str isEqualToString:MY_CONTRACT]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newContract"];
+        viewContr.object = [Contract MR_findAll][indexPath.row];
+    }
+    
+    if([str isEqualToString:MY_DOLZ]){
+        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newDolz"];
+        viewContr.object = [Dolz MR_findAll][indexPath.row];
+    }
+    
+    viewContr.delegate = self;
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewContr];
+    popover = [[UIPopoverController alloc] initWithContentViewController:navigationController];
+    [popover presentPopoverFromRect:CGRectMake(0, 0, 1000, 1000) inView:self.navigationController.view permittedArrowDirections:nil animated:YES];
 }
 
 - (void)viewDidLoad

@@ -2,19 +2,22 @@
 //  Dolz.m
 //  BDEfanov
 //
-//  Created by Сергей on 04.12.13.
+//  Created by Ефанов Сергей on 08.12.13.
 //  Copyright (c) 2013 MyCompany. All rights reserved.
 //
 
 #import "Dolz.h"
+#import "Office.h"
+#import "Worker.h"
 
 
 @implementation Dolz
 
 @dynamic cost;
 @dynamic idDolz;
-@dynamic idOffice;
 @dynamic nameDolz;
 @dynamic work;
+@dynamic dotWorker;
+@dynamic parentOffice;
 
 @end

@@ -2,11 +2,12 @@
 //  Client.m
 //  BDEfanov
 //
-//  Created by Сергей on 04.12.13.
+//  Created by Ефанов Сергей on 08.12.13.
 //  Copyright (c) 2013 MyCompany. All rights reserved.
 //
 
 #import "Client.h"
+#import "Contract.h"
 
 
 @implementation Client
@@ -17,5 +18,6 @@
 @dynamic lastName;
 @dynamic name;
 @dynamic otec;
+@dynamic parentContract;
 
 @end

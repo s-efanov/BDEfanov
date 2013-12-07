@@ -2,7 +2,7 @@
 //  Tarifs.h
 //  BDEfanov
 //
-//  Created by Ефанов Сергей on 07.12.13.
+//  Created by Ефанов Сергей on 08.12.13.
 //  Copyright (c) 2013 MyCompany. All rights reserved.
 //
 
@@ -17,6 +17,14 @@
 @property (nonatomic, retain) NSNumber * idTariff;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * speed;
-@property (nonatomic, retain) Contract *relationship;
+@property (nonatomic, retain) NSSet *contract;
+@end
+
+@interface Tarifs (CoreDataGeneratedAccessors)
+
+- (void)addContractObject:(Contract *)value;
+- (void)removeContractObject:(Contract *)value;
+- (void)addContract:(NSSet *)values;
+- (void)removeContract:(NSSet *)values;
 
 @end

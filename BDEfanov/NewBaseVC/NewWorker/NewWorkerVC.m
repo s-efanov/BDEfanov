@@ -57,7 +57,7 @@
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"nameDolz = %@", nameDolz];
     Dolz *dolz = [Dolz MR_findAllWithPredicate:predicate][0];
-    worker.idDolz = dolz.idDolz;
+    worker.parentDolz = dolz;
     
     worker.birthdate = birthDate.date;
     worker.med = [NSNumber numberWithBool:switchMed.on];

@@ -35,16 +35,7 @@
 		871F9357184E8C9700AEF649 /* NewDolzVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F9356184E8C9700AEF649 /* NewDolzVC.m */; };
 		871F935B184E8CCB00AEF649 /* NewContractVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F935A184E8CCB00AEF649 /* NewContractVC.m */; };
 		871F935F184E8D2900AEF649 /* NewWorkerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 871F935E184E8D2900AEF649 /* NewWorkerVC.m */; };
-		87213DEE18533E84004F93C0 /* Office.m in Sources */ = {isa = PBXBuildFile; fileRef = 87213DED18533E84004F93C0 /* Office.m */; };
-		87213DF118535447004F93C0 /* Tarifs.m in Sources */ = {isa = PBXBuildFile; fileRef = 87213DF018535447004F93C0 /* Tarifs.m */; };
 		87213DF4185380CA004F93C0 /* Limits.m in Sources */ = {isa = PBXBuildFile; fileRef = 87213DF3185380CA004F93C0 /* Limits.m */; };
-		87213DF718538551004F93C0 /* Contract.m in Sources */ = {isa = PBXBuildFile; fileRef = 87213DF618538551004F93C0 /* Contract.m */; };
-		872860A5184FBCEA0006375D /* Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860A4184FBCEA0006375D /* Client.m */; };
-		872860A8184FBCEA0006375D /* Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860A7184FBCEA0006375D /* Worker.m */; };
-		872860AE184FBCEA0006375D /* Dolz.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860AD184FBCEA0006375D /* Dolz.m */; };
-		872860B1184FBCEA0006375D /* Equipment.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860B0184FBCEA0006375D /* Equipment.m */; };
-		872860B7184FBCEA0006375D /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860B6184FBCEA0006375D /* Service.m */; };
-		872860BD184FBFA50006375D /* Application.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860BC184FBFA50006375D /* Application.m */; };
 		872860FA184FD3350006375D /* MagicalImportFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860C2184FD3350006375D /* MagicalImportFunctions.m */; };
 		872860FB184FD3350006375D /* NSAttributeDescription+MagicalDataImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860C4184FD3350006375D /* NSAttributeDescription+MagicalDataImport.m */; };
 		872860FC184FD3350006375D /* NSEntityDescription+MagicalDataImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860C6184FD3350006375D /* NSEntityDescription+MagicalDataImport.m */; };
@@ -71,6 +62,15 @@
 		87286111184FD3350006375D /* MagicalRecord+Setup.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860F3184FD3350006375D /* MagicalRecord+Setup.m */; };
 		87286112184FD3350006375D /* MagicalRecord+ShorthandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860F5184FD3350006375D /* MagicalRecord+ShorthandSupport.m */; };
 		87286113184FD3350006375D /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 872860F7184FD3350006375D /* MagicalRecord.m */; };
+		87A855421853C8DB004A0EFB /* Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A855411853C8DB004A0EFB /* Client.m */; };
+		87A855451853C8DC004A0EFB /* Office.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A855441853C8DC004A0EFB /* Office.m */; };
+		87A855481853C8DC004A0EFB /* Application.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A855471853C8DC004A0EFB /* Application.m */; };
+		87A8554B1853C8DC004A0EFB /* Tarifs.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A8554A1853C8DC004A0EFB /* Tarifs.m */; };
+		87A8554E1853C8DC004A0EFB /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A8554D1853C8DC004A0EFB /* Service.m */; };
+		87A855511853C8DC004A0EFB /* Equipment.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A855501853C8DC004A0EFB /* Equipment.m */; };
+		87A855541853C8DC004A0EFB /* Contract.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A855531853C8DC004A0EFB /* Contract.m */; };
+		87A855571853C8DC004A0EFB /* Dolz.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A855561853C8DC004A0EFB /* Dolz.m */; };
+		87A8555A1853C8DC004A0EFB /* Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A855591853C8DC004A0EFB /* Worker.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,26 +131,8 @@
 		871F935A184E8CCB00AEF649 /* NewContractVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewContractVC.m; path = NewBaseVC/NewContractVC/NewContractVC.m; sourceTree = "<group>"; };
 		871F935D184E8D2900AEF649 /* NewWorkerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewWorkerVC.h; path = NewBaseVC/NewWorker/NewWorkerVC.h; sourceTree = "<group>"; };
 		871F935E184E8D2900AEF649 /* NewWorkerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewWorkerVC.m; path = NewBaseVC/NewWorker/NewWorkerVC.m; sourceTree = "<group>"; };
-		87213DEC18533E84004F93C0 /* Office.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Office.h; path = CoreData/Office.h; sourceTree = "<group>"; };
-		87213DED18533E84004F93C0 /* Office.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Office.m; path = CoreData/Office.m; sourceTree = "<group>"; };
-		87213DEF18535447004F93C0 /* Tarifs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tarifs.h; path = CoreData/Tarifs.h; sourceTree = "<group>"; };
-		87213DF018535447004F93C0 /* Tarifs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tarifs.m; path = CoreData/Tarifs.m; sourceTree = "<group>"; };
 		87213DF2185380CA004F93C0 /* Limits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Limits.h; path = CoreData/Limits.h; sourceTree = "<group>"; };
 		87213DF3185380CA004F93C0 /* Limits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Limits.m; path = CoreData/Limits.m; sourceTree = "<group>"; };
-		87213DF518538551004F93C0 /* Contract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Contract.h; path = CoreData/Contract.h; sourceTree = "<group>"; };
-		87213DF618538551004F93C0 /* Contract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Contract.m; path = CoreData/Contract.m; sourceTree = "<group>"; };
-		872860A3184FBCEA0006375D /* Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Client.h; path = CoreData/Client.h; sourceTree = "<group>"; };
-		872860A4184FBCEA0006375D /* Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Client.m; path = CoreData/Client.m; sourceTree = "<group>"; };
-		872860A6184FBCEA0006375D /* Worker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Worker.h; path = CoreData/Worker.h; sourceTree = "<group>"; };
-		872860A7184FBCEA0006375D /* Worker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Worker.m; path = CoreData/Worker.m; sourceTree = "<group>"; };
-		872860AC184FBCEA0006375D /* Dolz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dolz.h; path = CoreData/Dolz.h; sourceTree = "<group>"; };
-		872860AD184FBCEA0006375D /* Dolz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Dolz.m; path = CoreData/Dolz.m; sourceTree = "<group>"; };
-		872860AF184FBCEA0006375D /* Equipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Equipment.h; path = CoreData/Equipment.h; sourceTree = "<group>"; };
-		872860B0184FBCEA0006375D /* Equipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Equipment.m; path = CoreData/Equipment.m; sourceTree = "<group>"; };
-		872860B5184FBCEA0006375D /* Service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Service.h; path = CoreData/Service.h; sourceTree = "<group>"; };
-		872860B6184FBCEA0006375D /* Service.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Service.m; path = CoreData/Service.m; sourceTree = "<group>"; };
-		872860BB184FBFA50006375D /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Application.h; path = CoreData/Application.h; sourceTree = "<group>"; };
-		872860BC184FBFA50006375D /* Application.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Application.m; path = CoreData/Application.m; sourceTree = "<group>"; };
 		872860C1184FD3350006375D /* MagicalImportFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalImportFunctions.h; sourceTree = "<group>"; };
 		872860C2184FD3350006375D /* MagicalImportFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagicalImportFunctions.m; sourceTree = "<group>"; };
 		872860C3184FD3350006375D /* NSAttributeDescription+MagicalDataImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributeDescription+MagicalDataImport.h"; sourceTree = "<group>"; };
@@ -205,6 +187,24 @@
 		872860F7184FD3350006375D /* MagicalRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagicalRecord.m; sourceTree = "<group>"; };
 		872860F8184FD3350006375D /* MagicalRecordShorthand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalRecordShorthand.h; sourceTree = "<group>"; };
 		872860F9184FD3350006375D /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
+		87A855401853C8DB004A0EFB /* Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Client.h; path = CoreData/Client.h; sourceTree = "<group>"; };
+		87A855411853C8DB004A0EFB /* Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Client.m; path = CoreData/Client.m; sourceTree = "<group>"; };
+		87A855431853C8DC004A0EFB /* Office.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Office.h; path = CoreData/Office.h; sourceTree = "<group>"; };
+		87A855441853C8DC004A0EFB /* Office.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Office.m; path = CoreData/Office.m; sourceTree = "<group>"; };
+		87A855461853C8DC004A0EFB /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Application.h; path = CoreData/Application.h; sourceTree = "<group>"; };
+		87A855471853C8DC004A0EFB /* Application.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Application.m; path = CoreData/Application.m; sourceTree = "<group>"; };
+		87A855491853C8DC004A0EFB /* Tarifs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tarifs.h; path = CoreData/Tarifs.h; sourceTree = "<group>"; };
+		87A8554A1853C8DC004A0EFB /* Tarifs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tarifs.m; path = CoreData/Tarifs.m; sourceTree = "<group>"; };
+		87A8554C1853C8DC004A0EFB /* Service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Service.h; path = CoreData/Service.h; sourceTree = "<group>"; };
+		87A8554D1853C8DC004A0EFB /* Service.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Service.m; path = CoreData/Service.m; sourceTree = "<group>"; };
+		87A8554F1853C8DC004A0EFB /* Equipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Equipment.h; path = CoreData/Equipment.h; sourceTree = "<group>"; };
+		87A855501853C8DC004A0EFB /* Equipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Equipment.m; path = CoreData/Equipment.m; sourceTree = "<group>"; };
+		87A855521853C8DC004A0EFB /* Contract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Contract.h; path = CoreData/Contract.h; sourceTree = "<group>"; };
+		87A855531853C8DC004A0EFB /* Contract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Contract.m; path = CoreData/Contract.m; sourceTree = "<group>"; };
+		87A855551853C8DC004A0EFB /* Dolz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dolz.h; path = CoreData/Dolz.h; sourceTree = "<group>"; };
+		87A855561853C8DC004A0EFB /* Dolz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Dolz.m; path = CoreData/Dolz.m; sourceTree = "<group>"; };
+		87A855581853C8DC004A0EFB /* Worker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Worker.h; path = CoreData/Worker.h; sourceTree = "<group>"; };
+		87A855591853C8DC004A0EFB /* Worker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Worker.m; path = CoreData/Worker.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,27 +314,27 @@
 			isa = PBXGroup;
 			children = (
 				872860BE184FD3350006375D /* MagicalRecord */,
-				872860B5184FBCEA0006375D /* Service.h */,
-				872860B6184FBCEA0006375D /* Service.m */,
-				872860AF184FBCEA0006375D /* Equipment.h */,
-				872860B0184FBCEA0006375D /* Equipment.m */,
-				872860AC184FBCEA0006375D /* Dolz.h */,
-				872860AD184FBCEA0006375D /* Dolz.m */,
-				872860A6184FBCEA0006375D /* Worker.h */,
-				872860A7184FBCEA0006375D /* Worker.m */,
-				872860A3184FBCEA0006375D /* Client.h */,
-				872860A4184FBCEA0006375D /* Client.m */,
 				871F9301184E423D00AEF649 /* BDEfanov.xcdatamodeld */,
-				87213DF518538551004F93C0 /* Contract.h */,
-				87213DF618538551004F93C0 /* Contract.m */,
+				87A855401853C8DB004A0EFB /* Client.h */,
+				87A855411853C8DB004A0EFB /* Client.m */,
+				87A8554C1853C8DC004A0EFB /* Service.h */,
+				87A8554D1853C8DC004A0EFB /* Service.m */,
+				87A8554F1853C8DC004A0EFB /* Equipment.h */,
+				87A855501853C8DC004A0EFB /* Equipment.m */,
+				87A855551853C8DC004A0EFB /* Dolz.h */,
+				87A855561853C8DC004A0EFB /* Dolz.m */,
+				87A855581853C8DC004A0EFB /* Worker.h */,
+				87A855591853C8DC004A0EFB /* Worker.m */,
+				87A855521853C8DC004A0EFB /* Contract.h */,
+				87A855531853C8DC004A0EFB /* Contract.m */,
+				87A855491853C8DC004A0EFB /* Tarifs.h */,
+				87A8554A1853C8DC004A0EFB /* Tarifs.m */,
+				87A855461853C8DC004A0EFB /* Application.h */,
+				87A855471853C8DC004A0EFB /* Application.m */,
+				87A855431853C8DC004A0EFB /* Office.h */,
+				87A855441853C8DC004A0EFB /* Office.m */,
 				87213DF2185380CA004F93C0 /* Limits.h */,
 				87213DF3185380CA004F93C0 /* Limits.m */,
-				87213DEF18535447004F93C0 /* Tarifs.h */,
-				87213DF018535447004F93C0 /* Tarifs.m */,
-				87213DEC18533E84004F93C0 /* Office.h */,
-				87213DED18533E84004F93C0 /* Office.m */,
-				872860BB184FBFA50006375D /* Application.h */,
-				872860BC184FBFA50006375D /* Application.m */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -669,10 +669,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				872860B7184FBCEA0006375D /* Service.m in Sources */,
-				872860AE184FBCEA0006375D /* Dolz.m in Sources */,
+				87A8554B1853C8DC004A0EFB /* Tarifs.m in Sources */,
 				8728610C184FD3350006375D /* NSPersistentStoreCoordinator+MagicalRecord.m in Sources */,
-				87213DF718538551004F93C0 /* Contract.m in Sources */,
+				87A855541853C8DC004A0EFB /* Contract.m in Sources */,
 				872860FC184FD3350006375D /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				87286112184FD3350006375D /* MagicalRecord+ShorthandSupport.m in Sources */,
 				871F9319184E6FE800AEF649 /* NewBaseVC.m in Sources */,
@@ -685,9 +684,9 @@
 				8728610F184FD3350006375D /* MagicalRecord+iCloud.m in Sources */,
 				872860FB184FD3350006375D /* NSAttributeDescription+MagicalDataImport.m in Sources */,
 				87286111184FD3350006375D /* MagicalRecord+Setup.m in Sources */,
-				872860A8184FBCEA0006375D /* Worker.m in Sources */,
 				871F9347184E8BDD00AEF649 /* NewEquipmentVC.m in Sources */,
 				871F9357184E8C9700AEF649 /* NewDolzVC.m in Sources */,
+				87A855451853C8DC004A0EFB /* Office.m in Sources */,
 				8728610B184FD3350006375D /* NSPersistentStore+MagicalRecord.m in Sources */,
 				87286108184FD3350006375D /* NSManagedObjectContext+MagicalSaves.m in Sources */,
 				871F92C9184E3E9800AEF649 /* main.m in Sources */,
@@ -695,27 +694,28 @@
 				87286103184FD3350006375D /* NSManagedObject+MagicalFinders.m in Sources */,
 				871F934F184E8C4A00AEF649 /* NewServiceVC.m in Sources */,
 				871F9303184E423D00AEF649 /* BDEfanov.xcdatamodeld in Sources */,
+				87A8555A1853C8DC004A0EFB /* Worker.m in Sources */,
+				87A855571853C8DC004A0EFB /* Dolz.m in Sources */,
 				87286106184FD3350006375D /* NSManagedObjectContext+MagicalObserving.m in Sources */,
 				871F935B184E8CCB00AEF649 /* NewContractVC.m in Sources */,
+				87A8554E1853C8DC004A0EFB /* Service.m in Sources */,
 				87286102184FD3350006375D /* NSManagedObject+MagicalDataImport.m in Sources */,
 				871F9326184E706B00AEF649 /* NewTariffVC.m in Sources */,
-				872860A5184FBCEA0006375D /* Client.m in Sources */,
 				872860FF184FD3350006375D /* NSRelationshipDescription+MagicalDataImport.m in Sources */,
 				8728610E184FD3350006375D /* MagicalRecord+ErrorHandling.m in Sources */,
+				87A855511853C8DC004A0EFB /* Equipment.m in Sources */,
 				871F935F184E8D2900AEF649 /* NewWorkerVC.m in Sources */,
-				872860BD184FBFA50006375D /* Application.m in Sources */,
 				871F934B184E8C1900AEF649 /* NewApplicationVC.m in Sources */,
 				871F9325184E706B00AEF649 /* NewOfficeVC.m in Sources */,
 				87286104184FD3350006375D /* NSManagedObject+MagicalRecord.m in Sources */,
 				87286110184FD3350006375D /* MagicalRecord+Options.m in Sources */,
 				87286107184FD3350006375D /* NSManagedObjectContext+MagicalRecord.m in Sources */,
 				872860FA184FD3350006375D /* MagicalImportFunctions.m in Sources */,
-				872860B1184FBCEA0006375D /* Equipment.m in Sources */,
+				87A855481853C8DC004A0EFB /* Application.m in Sources */,
 				871F92F7184E410A00AEF649 /* DetailViewController.m in Sources */,
+				87A855421853C8DB004A0EFB /* Client.m in Sources */,
 				871F92F8184E410A00AEF649 /* EnterVC.m in Sources */,
-				87213DEE18533E84004F93C0 /* Office.m in Sources */,
 				87286100184FD3350006375D /* NSString+MagicalDataImport.m in Sources */,
-				87213DF118535447004F93C0 /* Tarifs.m in Sources */,
 				87286101184FD3350006375D /* NSManagedObject+MagicalAggregation.m in Sources */,
 				871F92FC184E415500AEF649 /* MasterViewController.m in Sources */,
 				87213DF4185380CA004F93C0 /* Limits.m in Sources */,

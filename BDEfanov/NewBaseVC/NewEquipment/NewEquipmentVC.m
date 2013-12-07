@@ -31,6 +31,12 @@
 {
     [super viewDidLoad];
 	limits = [Limits MR_findAll][0];
+    
+    if(self.object){
+        textFieldFirm.text = ((Equipment*)self.object).firm;
+        textFieldModel.text = ((Equipment*)self.object).model;
+        textFieldScancode.text = ((Equipment*)self.object).scancode.stringValue;
+    }
 }
 
 -(IBAction)btnSave:(id)sender{
@@ -43,12 +49,14 @@
         return;
     }
     
-    Equipment *equipment = [Equipment MR_createEntity];
+    if(!self.object){
+        self.object = [Equipment MR_createEntity];
+        ((Equipment*)self.object).idEquipment = [limits nextEquipmentId];
+    }
     
-    equipment.idEquipment = [limits nextEquipmentId];
-    equipment.firm = textFieldFirm.text;
-    equipment.model = textFieldModel.text;
-    equipment.scancode = [NSNumber numberWithInteger:textFieldScancode.text.integerValue];
+    ((Equipment*)self.object).firm = textFieldFirm.text;
+    ((Equipment*)self.object).model = textFieldModel.text;
+    ((Equipment*)self.object).scancode = [NSNumber numberWithInteger:textFieldScancode.text.integerValue];
     
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
