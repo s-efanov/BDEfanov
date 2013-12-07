@@ -9,9 +9,11 @@
 #import "NewDolzVC.h"
 #import "Office.h"
 #import "Dolz.h"
+#import "Limits.h"
 
 @interface NewDolzVC (){
     NSArray *offices;
+    Limits *limits;
     NSString *nameOffice;
 }
 
@@ -32,28 +34,58 @@
 {
     [super viewDidLoad];
 	offices = [Office MR_findAll];
+    limits = [Limits MR_findAll][0];
+    
+    if(offices.count)
+        nameOffice = ((Office*)offices[0]).name;
 }
 
 -(IBAction)btnSave:(id)sender{
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *dolz = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
-                                                            inManagedObjectContext:context];
+    NSString *str = [self validate];
     
-    [dolz setValue:[NSNumber numberWithInteger:1] forKey:@"idDolz"];
-    [dolz setValue:[NSNumber numberWithInteger:textFieldCost.text.integerValue] forKey:@"cost"];
-    [dolz setValue:textFieldName.text forKey:@"nameDolz"];
+    if(![str isEqualToString:@""]){
+        UIAlertView *al = [[UIAlertView alloc] initWithTitle:@"Ошибка" message:str delegate:self cancelButtonTitle:@"ОК" otherButtonTitles:nil, nil];
+        [al show];
+        return;
+    }
+    Dolz *dolz = [Dolz MR_createEntity];
+    
+    dolz.idDolz = [limits nextDolzId];
+    dolz.cost = [NSNumber numberWithInteger:textFieldCost.text.integerValue];
+    dolz.nameDolz = textFieldName.text;
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", nameOffice];
     Office *office = [Office MR_findAllWithPredicate:predicate][0];
-    [dolz setValue:office.idOffice forKey:@"idOffice"];
+    dolz.idOffice = office.idOffice;
     
-    [dolz setValue:textFieldWork.text forKey:@"work"];
+    dolz.work = textFieldWork.text;
     
-    [context save:nil];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     [self.delegate closePopover];
+}
+
+-(NSString*) validate{
+    NSMutableString *str = [NSMutableString new];
+    
+    if([textFieldName.text isEqualToString:@""]){
+        [str appendString:@"Название должности не может быть пустым\n"];
+    }
+    
+    if([textFieldCost.text isEqualToString:@""]){
+        [str appendString:@"Оклад не может быть пустым\n"];
+    }
+    
+    if([textFieldWork.text isEqualToString:@""]){
+        [str appendString:@"Обязанности не могут быть пустыми\n"];
+    }
+    
+    if(!offices.count){
+        [str appendString:@"В приложении нет офисов\n"];
+    }
+    
+    return str;
 }
 
 -(NSInteger) numberOfComponentsInPickerView:(UIPickerView *)pickerView{

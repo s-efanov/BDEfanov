@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "NewBaseVC.h"
 
-@interface NewTariffVC : NewBaseVC{
+@interface NewTariffVC : NewBaseVC<UITextFieldDelegate>{
     IBOutlet UITextField *textFieldNameTariff;
     IBOutlet UITextField *textFieldSpeed;
     IBOutlet UITextField *textFieldCost;

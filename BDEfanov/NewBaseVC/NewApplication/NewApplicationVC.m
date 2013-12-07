@@ -7,8 +7,15 @@
 //
 
 #import "NewApplicationVC.h"
+#import "Contract.h"
+#import "Application.h"
+#import "Limits.h"
 
-@interface NewApplicationVC ()
+@interface NewApplicationVC (){
+    NSArray *contracts;
+    NSString *idContract;
+    Limits *limits;
+}
 
 @end
 
@@ -26,24 +33,63 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	contracts = [Contract MR_findAll];
+    limits = [Limits MR_findAll][0];
+    
+    if(contracts.count)
+        idContract = ((Contract*)contracts[0]).idContract.stringValue;
 }
 
 -(IBAction)btnSave:(id)sender{
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *application = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
-                                                            inManagedObjectContext:context];
+    NSString *str = [self validate];
     
-    [application setValue:[NSNumber numberWithInteger:1] forKey:@"idApplication"];
-    [application setValue:[NSNumber numberWithInteger:textFieldContract.text.integerValue] forKey:@"idContract"];
-    [application setValue:textFieldDescription.text forKey:@"descriptioncontract"];
-    [application setValue:[NSNumber numberWithBool:switchClosed.on] forKey:@"closed"];
+    if(![str isEqualToString:@""]){
+        UIAlertView *al = [[UIAlertView alloc] initWithTitle:@"Ошибка" message:str delegate:self cancelButtonTitle:@"ОК" otherButtonTitles:nil, nil];
+        [al show];
+        return;
+    }
+
+    Application *application = [Application MR_createEntity];
     
-    [context save:nil];
+    application.idApplication = [limits nextApplicationId];
+    application.idContract = [NSNumber numberWithInteger:idContract.integerValue];
+    application.descriptioncontract = textFieldDescription.text;
+    application.closed = [NSNumber numberWithBool:switchClosed.on];
+    
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     [self.delegate closePopover];
+}
+
+-(NSString*) validate{
+    NSMutableString *str = [NSMutableString new];
+    
+    if([textFieldDescription.text isEqualToString:@""]){
+        [str appendString:@"Описание не может быть пустым\n"];
+    }
+    
+    if(!contracts.count){
+        [str appendString:@"В приложении нет договоров\n"];
+    }
+    
+    return str;
+}
+
+-(NSInteger) numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+
+-(NSInteger) pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    return contracts.count;
+}
+
+-(NSString *) pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    return ((Contract*)contracts[row]).idContract.stringValue;
+}
+
+-(void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    idContract = ((Contract*)contracts[row]).idContract.stringValue;
 }
 
 - (void)didReceiveMemoryWarning

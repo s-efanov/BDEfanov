@@ -7,8 +7,12 @@
 //
 
 #import "NewEquipmentVC.h"
+#import "Equipment.h"
+#import "Limits.h"
 
-@interface NewEquipmentVC ()
+@interface NewEquipmentVC (){
+    Limits *limits;
+}
 
 @end
 
@@ -26,24 +30,47 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	limits = [Limits MR_findAll][0];
 }
 
 -(IBAction)btnSave:(id)sender{
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *equipment = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
-                                                            inManagedObjectContext:context];
+    NSString *str = [self validate];
     
-    [equipment setValue:[NSNumber numberWithInteger:1] forKey:@"idEquipment"];
-    [equipment setValue:textFieldFirm.text forKey:@"firm"];
-    [equipment setValue:textFieldModel.text forKey:@"model"];
-    [equipment setValue:[NSNumber numberWithInteger:textFieldScancode.text.integerValue] forKey:@"scancode"];
+    if(![str isEqualToString:@""]){
+        UIAlertView *al = [[UIAlertView alloc] initWithTitle:@"Ошибка" message:str delegate:self cancelButtonTitle:@"ОК" otherButtonTitles:nil, nil];
+        [al show];
+        return;
+    }
     
-    [context save:nil];
+    Equipment *equipment = [Equipment MR_createEntity];
+    
+    equipment.idEquipment = [limits nextEquipmentId];
+    equipment.firm = textFieldFirm.text;
+    equipment.model = textFieldModel.text;
+    equipment.scancode = [NSNumber numberWithInteger:textFieldScancode.text.integerValue];
+    
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     [self.delegate closePopover];
+}
+
+-(NSString*) validate{
+    NSMutableString *str = [NSMutableString new];
+    
+    if([textFieldFirm.text isEqualToString:@""]){
+        [str appendString:@"Фирма не может быть пустой\n"];
+    }
+    
+    if([textFieldModel.text isEqualToString:@""]){
+        [str appendString:@"Модель не может быть пустой\n"];
+    }
+    
+    if([textFieldScancode.text isEqualToString:@""]){
+        [str appendString:@"Скан код не может быть пустым\n"];
+    }
+    
+    return str;
 }
 
 - (void)didReceiveMemoryWarning

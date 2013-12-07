@@ -7,9 +7,13 @@
 //
 
 #import "NewTariffVC.h"
+#import "Tarifs.h"
 #import "DetailViewController.h"
+#import "Limits.h"
 
-@interface NewTariffVC ()
+@interface NewTariffVC (){
+    Limits *limits;
+}
 
 @end
 
@@ -27,24 +31,46 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	limits = [Limits MR_findAll][0];
 }
 
 -(IBAction)btnSave:(id)sender{
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *tarif = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
-                                                            inManagedObjectContext:context];
+    NSString *str = [self validate];
     
-    [tarif setValue:[NSNumber numberWithInteger:1] forKey:@"idTariff"];
-    [tarif setValue:textFieldNameTariff.text forKey:@"name"];
-    [tarif setValue:[NSNumber numberWithInteger:textFieldCost.text.integerValue] forKey:@"cost"];
-    [tarif setValue:[NSNumber numberWithInteger:textFieldSpeed.text.integerValue] forKey:@"speed"];
+    if(![str isEqualToString:@""]){
+        UIAlertView *al = [[UIAlertView alloc] initWithTitle:@"Ошибка" message:str delegate:self cancelButtonTitle:@"ОК" otherButtonTitles:nil, nil];
+        [al show];
+        return;
+    }
+    Tarifs *tarif = [Tarifs MR_createEntity];
     
-    [context save:nil];
+    tarif.idTariff = [limits nextTarifsId];
+    tarif.name = textFieldNameTariff.text;
+    tarif.cost = [NSNumber numberWithInteger:textFieldCost.text.integerValue];
+    tarif.speed = [NSNumber numberWithInteger:textFieldSpeed.text.integerValue];
+    
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     [self.delegate closePopover];
+}
+
+-(NSString*) validate{
+    NSMutableString *str = [NSMutableString new];
+    
+    if([textFieldNameTariff.text isEqualToString:@""]){
+        [str appendString:@"Название тарифа не может быть пустым\n"];
+    }
+    
+    if([textFieldCost.text isEqualToString:@""]){
+        [str appendString:@"Цена не может быть пустой\n"];
+    }
+    
+    if([textFieldSpeed.text isEqualToString:@""]){
+        [str appendString:@"Скорость не может быть пустой\n"];
+    }
+    
+    return str;
 }
 
 - (void)didReceiveMemoryWarning

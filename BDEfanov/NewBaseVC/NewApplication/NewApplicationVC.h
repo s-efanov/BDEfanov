@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "NewBaseVC.h"
 
-@interface NewApplicationVC : NewBaseVC{
+@interface NewApplicationVC : NewBaseVC <UIPickerViewDelegate, UIPickerViewDataSource>{
    IBOutlet UITextField *textFieldDescription;
-   IBOutlet UITextField *textFieldContract;
+   IBOutlet UIPickerView *pickerContract;
    IBOutlet UISwitch *switchClosed;
 }
 

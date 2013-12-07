@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "NewBaseVC.h"
 
-@interface NewWorkerVC : NewBaseVC{
+@interface NewWorkerVC : NewBaseVC<UITextFieldDelegate>{
     IBOutlet UITextField *textFieldAdress;
     IBOutlet UIDatePicker *birthDate;
-    IBOutlet UITextField *textFieldDolz;
+    IBOutlet UIPickerView *pickerDolz;
     IBOutlet UITextField *textFieldLastName;
     IBOutlet UITextField *textFieldName;
     IBOutlet UITextField *textFieldOtec;

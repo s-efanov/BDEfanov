@@ -7,8 +7,12 @@
 //
 
 #import "NewServiceVC.h"
+#import "Service.h"
+#import "Limits.h"
 
-@interface NewServiceVC ()
+@interface NewServiceVC (){
+    Limits *limits;
+}
 
 @end
 
@@ -26,23 +30,43 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	limits = [Limits MR_findAll][0];
 }
 
 -(IBAction)btnSave:(id)sender{
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *service = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
-                                                            inManagedObjectContext:context];
+    NSString *str = [self validate];
     
-    [service setValue:[NSNumber numberWithInteger:1] forKey:@"idService"];
-    [service setValue:textFieldName.text forKey:@"name"];
-    [service setValue:[NSNumber numberWithInteger:textFieldCost.text.integerValue] forKey:@"cost"];
+    if(![str isEqualToString:@""]){
+        UIAlertView *al = [[UIAlertView alloc] initWithTitle:@"Ошибка" message:str delegate:self cancelButtonTitle:@"ОК" otherButtonTitles:nil, nil];
+        [al show];
+        return;
+    }
     
-    [context save:nil];
+    Service *service = [Service MR_createEntity];
+    
+    
+    service.idService = [limits nextServiceId];
+    service.name = textFieldName.text;
+    service.cost = [NSNumber numberWithInteger:textFieldCost.text.integerValue];
+    
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     [self.delegate closePopover];
+}
+
+-(NSString*) validate{
+    NSMutableString *str = [NSMutableString new];
+    
+    if([textFieldCost.text isEqualToString:@""]){
+        [str appendString:@"Стоимость не может быть пустой\n"];
+    }
+    
+    if([textFieldName.text isEqualToString:@""]){
+        [str appendString:@"Название услуги не может быть пустым\n"];
+    }
+    
+    return str;
 }
 
 - (void)didReceiveMemoryWarning

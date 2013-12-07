@@ -21,6 +21,7 @@
 #import "Application.h"
 #import "Equipment.h"
 #import "Client.h"
+#import "Limits.h"
 
 @interface DetailViewController (){
     UIPopoverController *popover;
@@ -74,51 +75,117 @@
     }
     
     NSString *str = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).entity;
-    NSString *labelForRow;
+    NSMutableString *labelForRow = [NSMutableString new];
     
     if([str isEqualToString:MY_OFFICE]){
-        Office *office = [self.fetchedResultsController fetchedObjects][indexPath.row];
-        labelForRow = office.name;
+        Office *office = [Office MR_findAll][indexPath.row];
+        [labelForRow appendString: office.name];
+        [labelForRow appendString:@" "];
+        [labelForRow appendString:office.adress];
     }
     
     if([str isEqualToString:MY_SERVICE]){
-        Service *service = [self.fetchedResultsController fetchedObjects][indexPath.row];
-        labelForRow = service.name;
+        Service *service = [Service MR_findAll][indexPath.row];
+        [labelForRow appendString: service.name];
+        [labelForRow appendString:@" "];
+        [labelForRow appendString:service.cost.stringValue];
+        [labelForRow appendString:@" руб."];
     }
     
     if([str isEqualToString:MY_TARIFF]){
-        Tarifs *tarifs = [self.fetchedResultsController fetchedObjects][indexPath.row];
-        labelForRow = tarifs.name;
+        Tarifs *tarifs = [Tarifs MR_findAll][indexPath.row];
+        [labelForRow appendString: tarifs.name];
+        [labelForRow appendString:@" Скорость: "];
+        [labelForRow appendString:tarifs.speed.stringValue];
+        [labelForRow appendString:@" Мбит/с"];
     }
     
     if([str isEqualToString:MY_EQUIPMENT]){
-        Equipment *equipment = [self.fetchedResultsController fetchedObjects][indexPath.row];
-        labelForRow = equipment.model;
+        Equipment *equipment = [Equipment MR_findAll][indexPath.row];
+        [labelForRow appendString: equipment.firm];
+        [labelForRow appendString:@" "];
+        [labelForRow appendString:equipment.model];
+        [labelForRow appendString:@" "];
+        [labelForRow appendString:equipment.scancode.stringValue];
     }
     
     if([str isEqualToString:MY_CLIENT]){
-        Client *client = [self.fetchedResultsController fetchedObjects][indexPath.row];
-        labelForRow = client.lastName;
+        Client *client = [Client MR_findAll][indexPath.row];
+        [labelForRow appendString: client.lastName];
+        [labelForRow appendString:@" "];
+        [labelForRow appendString: client.name];
+        [labelForRow appendString:@" "];
+        [labelForRow appendString: client.otec];
     }
     
     if([str isEqualToString:MY_WORKER]){
-        Worker *worker = [self.fetchedResultsController fetchedObjects][indexPath.row];
-        labelForRow = worker.name;
+        Worker *worker = [Worker MR_findAll][indexPath.row];
+        [labelForRow appendString: worker.name];
+        [labelForRow appendString:@" "];
+        [labelForRow appendString:worker.lastname];
+        [labelForRow appendString:@" "];
+        [labelForRow appendString:worker.otec];
+        [labelForRow appendString:@" "];
+        
+        NSPredicate *predicateDolz = [NSPredicate predicateWithFormat:@"idDolz = %@", worker.idDolz];
+        
+        NSArray *myDolz = [Dolz MR_findAllWithPredicate:predicateDolz];
+        
+        if(!myDolz.count){
+            NSLog(@"У сотрудника не назначена должность");
+        }
+        
+        Dolz *dolz = [Dolz MR_findAllWithPredicate:predicateDolz][0];
+        [labelForRow appendString:dolz.nameDolz];
     }
     
     if([str isEqualToString:MY_APPLICATION]){
-        Application *application = [self.fetchedResultsController fetchedObjects][indexPath.row];
-        labelForRow = application.idApplication.stringValue;
+        Application *application = [Application MR_findAll][indexPath.row];
+        [labelForRow appendString:@"Заявка: "];
+        [labelForRow appendString: application.idApplication.stringValue];
+        [labelForRow appendString:@"по договору"];
+        [labelForRow appendString:application.idContract.stringValue];
     }
     
     if([str isEqualToString:MY_CONTRACT]){
-        Contract *contract = [self.fetchedResultsController fetchedObjects][indexPath.row];
-        labelForRow = contract.idContract.stringValue;
+        Contract *contract = [Contract MR_findAll][indexPath.row];
+        [labelForRow appendString:@"№ "];
+        [labelForRow appendString: contract.idContract.stringValue];
+        
+        NSPredicate *predicateClient = [NSPredicate predicateWithFormat:@"idClient = %@", contract.idClient];
+        
+        NSArray *myClient = [Client MR_findAllWithPredicate:predicateClient];
+        
+        if(!myClient.count){
+            NSLog(@"У договора нет клиента");
+        }
+        
+        Client *client = myClient[0];
+        
+        [labelForRow appendString:@" "];
+        [labelForRow appendString:client.lastName];
+        [labelForRow appendString:@" "];
+        [labelForRow appendString:client.name];
+        [labelForRow appendString:@" "];
+        [labelForRow appendString:client.otec];
     }
     
     if([str isEqualToString:MY_DOLZ]){
-        Dolz *dolz = [self.fetchedResultsController fetchedObjects][indexPath.row];
-        labelForRow = dolz.nameDolz;
+        Dolz *dolz = [Dolz MR_findAll][indexPath.row];
+        [labelForRow appendString: dolz.nameDolz];
+        [labelForRow appendString:@" "];
+        
+        NSPredicate *predicateOffice = [NSPredicate predicateWithFormat:@"idOffice = %@", dolz.idOffice];
+        
+        NSArray *myOffice = [Office MR_findAllWithPredicate:predicateOffice];
+        
+        if(!myOffice.count){
+            NSLog(@"У должности нет офиса");
+        }
+        
+        Office *office = myOffice[0];
+        
+        [labelForRow appendString: office.name];
     }
     
     cell.textLabel.text = labelForRow;
@@ -166,6 +233,7 @@
 
 -(void) closePopover{
     [popover dismissPopoverAnimated:YES];
+    [myTable reloadData];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -240,7 +308,45 @@
 }
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [[self.fetchedResultsController fetchedObjects] count];
+    NSString *str = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).entity;
+    
+    if([str isEqualToString:MY_OFFICE]){
+        return [Office MR_countOfEntities];
+    }
+    
+    if([str isEqualToString:MY_SERVICE]){
+        return [Service MR_countOfEntities];
+    }
+    
+    if([str isEqualToString:MY_TARIFF]){
+        return [Tarifs MR_countOfEntities];
+    }
+    
+    if([str isEqualToString:MY_EQUIPMENT]){
+        return [Equipment MR_countOfEntities];
+    }
+    
+    if([str isEqualToString:MY_CLIENT]){
+        return [Client MR_countOfEntities];
+    }
+    
+    if([str isEqualToString:MY_WORKER]){
+        return [Worker MR_countOfEntities];
+    }
+    
+    if([str isEqualToString:MY_APPLICATION]){
+        return [Application MR_countOfEntities];
+    }
+    
+    if([str isEqualToString:MY_CONTRACT]){
+        return [Contract MR_countOfEntities];
+    }
+    
+    if([str isEqualToString:MY_DOLZ]){
+        return [Dolz MR_countOfEntities];
+    }
+    
+    return 0;
 }
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView{
@@ -318,6 +424,23 @@
     [super viewDidLoad];
     
     managedObjectContext = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext;
+    
+    NSArray *arr = [Limits MR_findAll];
+    if(!arr.count){
+        Limits *limits = [Limits MR_createInContext:managedObjectContext];
+        limits.limApplication = [NSNumber numberWithInteger:0];
+        limits.limClient = [NSNumber numberWithInteger:0];
+        limits.limContract = [NSNumber numberWithInteger:0];
+        limits.limDolz = [NSNumber numberWithInteger:0];
+        limits.limEquipment = [NSNumber numberWithInteger:0];
+        limits.limOffice = [NSNumber numberWithInteger:0];
+        limits.limService = [NSNumber numberWithInteger:0];
+        limits.limTarifs = [NSNumber numberWithInteger:0];
+        limits.limWorker = [NSNumber numberWithInteger:0];
+        [managedObjectContext save:nil];
+    }
+    
+    Limits *limits = arr[0];
     
     [self configureView];
 }

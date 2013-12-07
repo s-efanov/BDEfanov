@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "NewBaseVC.h"
 
-@interface NewOfficeVC : NewBaseVC{
+@interface NewOfficeVC : NewBaseVC<UITextFieldDelegate>{
     IBOutlet UITextField *textFieldNameOffice;
     IBOutlet UITextField *textFieldIndex;
     IBOutlet UITextField *textFieldAdress;

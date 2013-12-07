@@ -2,7 +2,7 @@
 //  Office.h
 //  BDEfanov
 //
-//  Created by Сергей on 04.12.13.
+//  Created by Ефанов Сергей on 07.12.13.
 //  Copyright (c) 2013 MyCompany. All rights reserved.
 //
 
@@ -14,8 +14,8 @@
 @interface Office : NSManagedObject
 
 @property (nonatomic, retain) NSString * adress;
-@property (nonatomic, retain) NSDecimalNumber * idOffice;
-@property (nonatomic, retain) NSDecimalNumber * index;
+@property (nonatomic, retain) NSNumber * idOffice;
+@property (nonatomic, retain) NSNumber * index;
 @property (nonatomic, retain) NSString * info;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSSet *relationship;

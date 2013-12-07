@@ -2,7 +2,7 @@
 //  Office.m
 //  BDEfanov
 //
-//  Created by Сергей on 04.12.13.
+//  Created by Ефанов Сергей on 07.12.13.
 //  Copyright (c) 2013 MyCompany. All rights reserved.
 //
 

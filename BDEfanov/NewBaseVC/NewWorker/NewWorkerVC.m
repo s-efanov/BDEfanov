@@ -7,8 +7,15 @@
 //
 
 #import "NewWorkerVC.h"
+#import "Dolz.h"
+#import "Worker.h"
+#import "Limits.h"
 
-@interface NewWorkerVC ()
+@interface NewWorkerVC (){
+    NSArray *dolzs;
+    Limits *limits;
+    NSString *nameDolz;
+}
 
 @end
 
@@ -26,30 +33,93 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	dolzs = [Dolz MR_findAll];
+    limits = [Limits MR_findAll][0];
+    
+    if(dolzs.count)
+        nameDolz = ((Dolz*)dolzs[0]).nameDolz;
 }
 
 -(IBAction)btnSave:(id)sender{
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *worker = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
-                                                            inManagedObjectContext:context];
+    NSString *str = [self validate];
     
-    [worker setValue:[NSNumber numberWithInteger:1] forKey:@"idWorker"];
-    [worker setValue:textFieldAdress.text forKey:@"adress"];
-    [worker setValue:[NSNumber numberWithInteger:textFieldDolz.text.integerValue] forKey:@"idDolz"];
-    [worker setValue:birthDate.date forKey:@"birthdate"];
-    [worker setValue:[NSNumber numberWithBool:switchMed.on] forKey:@"med"];
-    [worker setValue:textFieldName.text forKey:@"name"];
-    [worker setValue:textFieldLastName.text forKey:@"lastname"];
-    [worker setValue:textFieldOtec.text forKey:@"otec"];
-    [worker setValue:textFieldPasseport.text forKey:@"passeport"];
-    [worker setValue:[NSNumber numberWithInteger:textFieldTel.text.integerValue] forKey:@"tel"];
+    if(![str isEqualToString:@""]){
+        UIAlertView *al = [[UIAlertView alloc] initWithTitle:@"Ошибка" message:str delegate:self cancelButtonTitle:@"ОК" otherButtonTitles:nil, nil];
+        [al show];
+        return;
+    }
     
-    [context save:nil];
+    Worker *worker = [Worker MR_createEntity];
+    
+    worker.idWorker = [limits nextWorkerId];
+    worker.adress = textFieldAdress.text;
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"nameDolz = %@", nameDolz];
+    Dolz *dolz = [Dolz MR_findAllWithPredicate:predicate][0];
+    worker.idDolz = dolz.idDolz;
+    
+    worker.birthdate = birthDate.date;
+    worker.med = [NSNumber numberWithBool:switchMed.on];
+    worker.name = textFieldName.text;
+    worker.lastname = textFieldLastName.text;
+    worker.otec = textFieldOtec.text;
+    worker.passeport = textFieldPasseport.text;
+    worker.tel = [NSNumber numberWithInteger:textFieldTel.text.integerValue];
+    
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     [self.delegate closePopover];
+}
+
+-(NSString*) validate{
+    NSMutableString *str = [NSMutableString new];
+    
+    if([textFieldName.text isEqualToString:@""]){
+        [str appendString:@"Имя не может быть пустым\n"];
+    }
+    
+    if([textFieldLastName.text isEqualToString:@""]){
+        [str appendString:@"Фамилия не может быть пустой\n"];
+    }
+    
+    if([textFieldOtec.text isEqualToString:@""]){
+        [str appendString:@"Отчество не может быть пустым\n"];
+    }
+    
+    if([textFieldPasseport.text isEqualToString:@""]){
+        [str appendString:@"Номер паспорта не может быть пустым\n"];
+    }
+    
+    if([textFieldTel.text isEqualToString:@""]){
+        [str appendString:@"Телефон не может быть пустым\n"];
+    }
+    
+    if([textFieldAdress.text isEqualToString:@""]){
+        [str appendString:@"Адрес не может быть пустым\n"];
+    }
+    
+    if(!dolzs.count){
+        [str appendString:@"В организации нет должностей\n"];
+    }
+    
+    return str;
+}
+
+-(NSInteger) numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+
+-(NSInteger) pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    return dolzs.count;
+}
+
+-(NSString *) pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    return ((Dolz*)dolzs[row]).nameDolz;
+}
+
+-(void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    nameDolz = ((Dolz*)dolzs[row]).nameDolz;
 }
 
 - (void)didReceiveMemoryWarning

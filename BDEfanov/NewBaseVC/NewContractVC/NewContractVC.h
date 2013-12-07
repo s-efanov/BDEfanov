@@ -10,12 +10,12 @@
 #import "NewBaseVC.h"
 
 @interface NewContractVC : NewBaseVC{
-    IBOutlet UITextField *textFieldTarif;
-    IBOutlet UITextField *textFieldRouter;
-    IBOutlet UITextField *textFieldService;
-    IBOutlet UITextField *textFieldClient;
-    IBOutlet UITextField *textFieldOffice;
-    IBOutlet UITextField *textFieldWorker;
+    IBOutlet UIPickerView *pickerTarif;
+    IBOutlet UIPickerView *pickerRouter;
+    IBOutlet UIPickerView *pickerService;
+    IBOutlet UIPickerView *pickerClient;
+    IBOutlet UIPickerView *pickerOffice;
+    IBOutlet UIPickerView *pickerWorker;
 }
 
 @end

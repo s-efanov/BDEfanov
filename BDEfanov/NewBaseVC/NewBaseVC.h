@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BaseVCProtocol.h"
 
-@interface NewBaseVC : UIViewController{
+@interface NewBaseVC : UIViewController<UITextFieldDelegate>{
     IBOutlet UIBarButtonItem *btnSave;
     IBOutlet UIBarButtonItem *btnCancel;
 }

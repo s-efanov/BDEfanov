@@ -2,7 +2,7 @@
 //  Contract.h
 //  BDEfanov
 //
-//  Created by Сергей on 04.12.13.
+//  Created by Ефанов Сергей on 07.12.13.
 //  Copyright (c) 2013 MyCompany. All rights reserved.
 //
 
@@ -18,5 +18,6 @@
 @property (nonatomic, retain) NSNumber * idOffice;
 @property (nonatomic, retain) NSNumber * idTarif;
 @property (nonatomic, retain) NSNumber * idWorker;
+@property (nonatomic, retain) NSNumber * idService;
 
 @end

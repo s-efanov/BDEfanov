@@ -7,8 +7,12 @@
 //
 
 #import "NewClientVC.h"
+#import "Client.h"
+#import "Limits.h"
 
-@interface NewClientVC ()
+@interface NewClientVC (){
+    Limits *limits;
+}
 
 @end
 
@@ -26,26 +30,53 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	limits = [Limits MR_findAll][0];
 }
 
 -(IBAction)btnSave:(id)sender{
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *client = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
-                                                            inManagedObjectContext:context];
+    NSString *str = [self validate];
     
-    [client setValue:[NSNumber numberWithInteger:1] forKey:@"idClient"];
-    [client setValue:textFieldAdress.text forKey:@"adress"];
-    [client setValue:birthDate.date forKey:@"birthdate"];
-    [client setValue:textFieldName.text forKey:@"name"];
-    [client setValue:textFieldLastName.text forKey:@"lastName"];
-    [client setValue:textFieldOtec.text forKey:@"otec"];
+    if(![str isEqualToString:@""]){
+        UIAlertView *al = [[UIAlertView alloc] initWithTitle:@"Ошибка" message:str delegate:self cancelButtonTitle:@"ОК" otherButtonTitles:nil, nil];
+        [al show];
+        return;
+    }
     
-    [context save:nil];
+    Client *client = [Client MR_createEntity];
+    
+    client.idClient = [limits nextClientId];
+    client.adress = textFieldAdress.text;
+    client.birthdate = birthDate.date;
+    client.name = textFieldName.text;
+    client.lastName = textFieldLastName.text;
+    client.otec = textFieldOtec.text;
+    
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     [self.delegate closePopover];
+}
+
+-(NSString*) validate{
+    NSMutableString *str = [NSMutableString new];
+    
+    if([textFieldName.text isEqualToString:@""]){
+        [str appendString:@"Имя не может быть пустым\n"];
+    }
+    
+    if([textFieldLastName.text isEqualToString:@""]){
+        [str appendString:@"Фамилия не может быть пустой\n"];
+    }
+    
+    if([textFieldOtec.text isEqualToString:@""]){
+        [str appendString:@"Отчество не может быть пустым\n"];
+    }
+    
+    if([textFieldAdress.text isEqualToString:@""]){
+        [str appendString:@"Адрес не может быть пустым\n"];
+    }
+    
+    return str;
 }
 
 - (void)didReceiveMemoryWarning
