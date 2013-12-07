@@ -143,7 +143,7 @@
         Application *application = [Application MR_findAll][indexPath.row];
         [labelForRow appendString:@"Заявка: "];
         [labelForRow appendString: application.idApplication.stringValue];
-        [labelForRow appendString:@"по договору"];
+        [labelForRow appendString:@" по договору "];
         [labelForRow appendString:application.idContract.stringValue];
     }
     
@@ -239,21 +239,56 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the managed object for the given index path
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
         
-        // Save the context.
-        NSError *error = nil;
-        if (![context save:&error]) {
-            /*
-             Replace this implementation with code to handle the error appropriately.
-             
-             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-             */
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+        NSString *str = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).entity;
+        
+        if([str isEqualToString:MY_OFFICE]){
+            Office *office = [Office MR_findAll][indexPath.row];
+            [office MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
         }
+        
+        if([str isEqualToString:MY_SERVICE]){
+            Service *service = [Service MR_findAll][indexPath.row];
+            [service MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
+        }
+        
+        if([str isEqualToString:MY_TARIFF]){
+            Tarifs *tarif = [Tarifs MR_findAll][indexPath.row];
+            [tarif MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
+        }
+        
+        if([str isEqualToString:MY_EQUIPMENT]){
+            Equipment *equipment = [Equipment MR_findAll][indexPath.row];
+            [equipment MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
+        }
+        
+        if([str isEqualToString:MY_CLIENT]){
+            Client *client = [Client MR_findAll][indexPath.row];
+            [client MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
+        }
+        
+        if([str isEqualToString:MY_WORKER]){
+            Worker *worker = [Worker MR_findAll][indexPath.row];
+            [worker MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
+        }
+        
+        if([str isEqualToString:MY_APPLICATION]){
+            Application *application = [Application MR_findAll][indexPath.row];
+            [application MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
+        }
+        
+        if([str isEqualToString:MY_CONTRACT]){
+            Contract *contract = [Contract MR_findAll][indexPath.row];
+            [contract MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
+        }
+        
+        if([str isEqualToString:MY_DOLZ]){
+            Dolz *dolz = [Dolz MR_findAll][indexPath.row];
+            [dolz MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
+        }
+        
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        [myTable reloadData];
     }
 }
 
