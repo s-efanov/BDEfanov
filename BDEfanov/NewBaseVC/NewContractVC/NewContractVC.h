@@ -15,7 +15,6 @@
     IBOutlet UIPickerView *pickerService;
     IBOutlet UIPickerView *pickerClient;
     IBOutlet UIPickerView *pickerOffice;
-    IBOutlet UIPickerView *pickerWorker;
 }
 
 @end

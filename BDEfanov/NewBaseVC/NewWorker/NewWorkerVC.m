@@ -38,6 +38,16 @@
     
     if(dolzs.count)
         nameDolz = ((Dolz*)dolzs[0]).nameDolz;
+    
+    if(self.object){
+        textFieldName.text = ((Worker*)self.object).name;
+        textFieldLastName.text = ((Worker*)self.object).lastname;
+        textFieldOtec.text = ((Worker*)self.object).otec;
+        textFieldPasseport.text = ((Worker*)self.object).passeport;
+        textFieldAdress.text = ((Worker*)self.object).adress;
+        textFieldTel.text = ((Worker*)self.object).tel.stringValue;
+        switchMed.on = ((Worker*)self.object).med.boolValue;
+    }
 }
 
 -(IBAction)btnSave:(id)sender{

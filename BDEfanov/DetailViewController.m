@@ -27,6 +27,7 @@
     UIPopoverController *popover;
     NSManagedObjectContext *managedObjectContext;
     NSString *myEntity;
+    NSString *str;
     NSString *sort;
 }
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -74,7 +75,6 @@
         cell.textLabel.font = [UIFont boldSystemFontOfSize: 14];
     }
     
-    NSString *str = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).entity;
     NSMutableString *labelForRow = [NSMutableString new];
     
     if([str isEqualToString:MY_OFFICE]){
@@ -210,8 +210,6 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
-        NSString *str = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).entity;
-        
         if([str isEqualToString:MY_OFFICE]){
             Office *office = [Office MR_findAll][indexPath.row];
             [office MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
@@ -263,7 +261,6 @@
 }
 
 -(IBAction)btnNew:(id)sender{
-    NSString *str = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).entity;
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
      NewBaseVC *viewContr;
     
@@ -313,7 +310,6 @@
 }
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSString *str = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).entity;
     
     if([str isEqualToString:MY_OFFICE]){
         return [Office MR_countOfEntities];
@@ -360,61 +356,70 @@
 
 - (void)configureView
 {
-    NSString *str = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).entity;
+    str = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).entity;
     self.navigationItem.title = str;
     
     if([str isEqualToString:MY_OFFICE]){
         myEntity = TABLE_OFFICE;
         btn.titleLabel.text = @"Новый офис";
         sort = @"name";
+        infoBtn.hidden = YES;
     }
 
     if([str isEqualToString:MY_SERVICE]){
         myEntity = TABLE_SERVICE;
         btn.titleLabel.text = @"Новая услуга";
         sort = @"name";
+        infoBtn.hidden = YES;
     }
     
     if([str isEqualToString:MY_TARIFF]){
         myEntity = TABLE_TARIFF;
         btn.titleLabel.text = @"Новый тариф";
         sort = @"name";
+        infoBtn.hidden = YES;
     }
 
     if([str isEqualToString:MY_EQUIPMENT]){
         myEntity = TABLE_EQUIPMENT;
         btn.titleLabel.text = @"Новое оборудование";
         sort = @"model";
+        infoBtn.hidden = YES;
     }
     
     if([str isEqualToString:MY_CLIENT]){
         myEntity = TABLE_CLIENT;
         btn.titleLabel.text = @"Новый клиент";
         sort = @"name";
+        infoBtn.hidden = YES;
     }
     
     if([str isEqualToString:MY_WORKER]){
         myEntity = TABLE_WORKER;
         btn.titleLabel.text = @"Новый сотрудник";
         sort = @"name";
+        infoBtn.hidden = NO;
     }
     
     if([str isEqualToString:MY_APPLICATION]){
         myEntity = TABLE_APPLICATION;
         btn.titleLabel.text = @"Новая заявка";
         sort = @"descriptioncontract";
+        infoBtn.hidden = NO;
     }
     
     if([str isEqualToString:MY_CONTRACT]){
         myEntity = TABLE_CONTRACT;
         btn.titleLabel.text = @"Новый договор";
         sort = @"idContract";
+        infoBtn.hidden = YES;
     }
     
     if([str isEqualToString:MY_DOLZ]){
         myEntity = TABLE_DOLZ;
         btn.titleLabel.text = @"Новая должность";
         sort = @"idDolz";
+        infoBtn.hidden = YES;
     }
     
     [myTable reloadData];
@@ -425,7 +430,6 @@
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *str = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).entity;
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     NewBaseVC *viewContr;
     
@@ -462,6 +466,7 @@
     
     if([str isEqualToString:MY_APPLICATION]){
         viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newApplication"];
+        viewContr.object = [Application MR_findAll][indexPath.row];
     }
     
     if([str isEqualToString:MY_CONTRACT]){
@@ -483,21 +488,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+ 
     managedObjectContext = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext;
     
     NSArray *arr = [Limits MR_findAll];
     if(!arr.count){
         Limits *limits = [Limits MR_createInContext:managedObjectContext];
-        limits.limApplication = [NSNumber numberWithInteger:0];
-        limits.limClient = [NSNumber numberWithInteger:0];
-        limits.limContract = [NSNumber numberWithInteger:0];
-        limits.limDolz = [NSNumber numberWithInteger:0];
-        limits.limEquipment = [NSNumber numberWithInteger:0];
-        limits.limOffice = [NSNumber numberWithInteger:0];
-        limits.limService = [NSNumber numberWithInteger:0];
-        limits.limTarifs = [NSNumber numberWithInteger:0];
-        limits.limWorker = [NSNumber numberWithInteger:0];
+        limits.limApplication = [NSNumber numberWithInteger:1];
+        limits.limClient = [NSNumber numberWithInteger:1];
+        limits.limContract = [NSNumber numberWithInteger:1];
+        limits.limDolz = [NSNumber numberWithInteger:1];
+        limits.limEquipment = [NSNumber numberWithInteger:1];
+        limits.limOffice = [NSNumber numberWithInteger:1];
+        limits.limService = [NSNumber numberWithInteger:1];
+        limits.limTarifs = [NSNumber numberWithInteger:1];
+        limits.limWorker = [NSNumber numberWithInteger:1];
         [managedObjectContext save:nil];
     }
     

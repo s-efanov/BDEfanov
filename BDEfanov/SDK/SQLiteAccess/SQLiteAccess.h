@@ -1,6 +1,6 @@
 
 
-#define dbName @"notes_db"
+#define dbName @"BDEfanov_db"
 
 @interface SQLiteAccess : NSObject {
 }

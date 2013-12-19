@@ -17,4 +17,6 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSManagedObject *contractService;
 
+-(void) setCost:(NSNumber *)myCost;
+
 @end

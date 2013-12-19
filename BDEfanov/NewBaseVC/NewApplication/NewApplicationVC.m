@@ -41,6 +41,10 @@
     
     if(self.object){
         textFieldDescription.text = ((Application*)self.object).descriptioncontract;
+        switchClosed.on = ((Application*)self.object).closed.boolValue;
+    }
+    else{
+        switchClosed.on = NO;
     }
 }
 

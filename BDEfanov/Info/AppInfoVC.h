@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppInfoVC : UIViewController
+@interface AppInfoVC : UIViewController<UITableViewDataSource, UITableViewDelegate>{
+    IBOutlet UITableView *myTable;
+    IBOutlet UIImageView *myImage;
+    IBOutlet UILabel *myTitle;
+    IBOutlet UILabel *myCount;
+    IBOutlet UILabel *myWorker;
+}
 
 @end

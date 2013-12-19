@@ -27,5 +27,6 @@
 - (void)removeDotWorkerObject:(Worker *)value;
 - (void)addDotWorker:(NSSet *)values;
 - (void)removeDotWorker:(NSSet *)values;
+- (void) setCost:(NSNumber *)myCost;
 
 @end

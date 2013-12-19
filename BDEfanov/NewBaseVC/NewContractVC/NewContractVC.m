@@ -15,18 +15,17 @@
 #import "Service.h"
 #import "Limits.h"
 #import "Contract.h"
+#import "ContractService.h"
 
 @interface NewContractVC (){
     NSArray *equipments;
     NSArray *clients;
     NSArray *tarifs;
     NSArray *offices;
-    NSArray *workers;
     NSArray *services;
     Limits *limits;
     
     NSString *serviceName;
-    NSString *workerName;
     NSString *nameOffice;
     NSString *tarifName;
     NSString *equipmentModel;
@@ -53,7 +52,6 @@
     clients = [Client MR_findAll];
     tarifs = [Tarifs MR_findAll];
     offices = [Office MR_findAll];
-    workers = [Worker MR_findAll];
     services = [Service MR_findAll];
     limits = [Limits MR_findAll][0];
     
@@ -68,9 +66,6 @@
     
     if(offices.count)
         nameOffice = ((Office*)offices[0]).name;
-    
-    if(workers.count)
-        workerName = ((Worker*)workers[0]).name;
     
     if(tarifs.count)
         tarifName = ((Tarifs*)tarifs[0]).name;
@@ -111,15 +106,13 @@
     NSArray *myTarif = [Tarifs MR_findAllWithPredicate:tarifPredicate];
     ((Contract*)self.object).parentTarif = myTarif[0];
     
-    //заполняем id работника
-    NSPredicate *workerPredicate = [NSPredicate predicateWithFormat:@"name = %@", workerName];
-    NSArray *myWorker = [Worker MR_findAllWithPredicate:workerPredicate];
-    ((Contract*)self.object).parentWorker = myWorker[0];
-    
     //заполняем id услуги
     NSPredicate *servicePredicate = [NSPredicate predicateWithFormat:@"name = %@", serviceName];
     NSArray *myService = [Service MR_findAllWithPredicate:servicePredicate];
-    [((Contract*)self.object) addParentServiceObject: myService[0]];
+    
+    ContractService *contractService = [ContractService MR_createEntity];
+    [contractService addParentContractObject:self.object];
+    [contractService addParentServiceObject:myService[0]];
     
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
@@ -143,10 +136,6 @@
     
     if(!offices.count){
         [str appendString:@"Нет офисов\n"];
-    }
-    
-    if(!workers.count){
-        [str appendString:@"Нет сотрудников\n"];
     }
     
     if(!services.count){
@@ -174,9 +163,6 @@
         case 3:
             return offices.count;
             break;
-        case 4:
-            return workers.count;
-            break;
         case 5:
             return services.count;
         default:
@@ -200,9 +186,6 @@
         case 3:
             return ((Office*)offices[row]).name;
             break;
-        case 4:
-            return ((Worker*)workers[row]).name;
-            break;
         case 5:
             return ((Service*)services[row]).name;
         default:
@@ -224,9 +207,6 @@
             break;
         case 3:
             nameOffice = ((Office*)offices[row]).name;
-            break;
-        case 4:
-            workerName = ((Worker*)workers[row]).name;
             break;
         case 5:
             serviceName = ((Service*)services[row]).name;

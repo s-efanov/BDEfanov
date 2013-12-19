@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BDEfanov/DetailViewController.m"
-            timestampString = "408129039.361811"
+            timestampString = "408827304.196461"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
             landmarkName = "-setDetailItem:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BDEfanov/DetailViewController.m"
-            timestampString = "408148131.041321"
+            timestampString = "408827431.794865"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "364"
-            endingLineNumber = "364"
+            startingLineNumber = "360"
+            endingLineNumber = "360"
             landmarkName = "-configureView"
             landmarkType = "5">
          </BreakpointContent>

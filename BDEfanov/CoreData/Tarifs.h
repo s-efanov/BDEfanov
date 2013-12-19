@@ -26,5 +26,6 @@
 - (void)removeContractObject:(Contract *)value;
 - (void)addContract:(NSSet *)values;
 - (void)removeContract:(NSSet *)values;
+- (void) setCost:(NSNumber *) myCost;
 
 @end

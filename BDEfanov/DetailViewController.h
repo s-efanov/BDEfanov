@@ -11,6 +11,7 @@
 @interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>{
     IBOutlet UITableView *myTable;
     IBOutlet UIButton *btn;
+    IBOutlet UIButton *infoBtn;
     UIPopoverController *myPopover;
 }
 

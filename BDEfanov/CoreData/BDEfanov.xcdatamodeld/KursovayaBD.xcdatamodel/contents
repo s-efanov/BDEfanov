@@ -13,17 +13,21 @@
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="otec" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parentContract" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Contract" inverseName="parentClient" inverseEntity="Contract" syncable="YES"/>
+        <relationship name="parentContract" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Contract" inverseName="parentClient" inverseEntity="Contract" syncable="YES"/>
     </entity>
     <entity name="Contract" representedClassName="Contract" syncable="YES">
         <attribute name="idContract" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="dotApplication" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Application" inverseName="parentContract" inverseEntity="Application" syncable="YES"/>
         <relationship name="parentClient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="parentContract" inverseEntity="Client" syncable="YES"/>
+        <relationship name="parentContractService" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContractService" inverseName="parentContract" inverseEntity="ContractService" syncable="YES"/>
         <relationship name="parentEquipment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equipment" inverseName="contract" inverseEntity="Equipment" syncable="YES"/>
         <relationship name="parentOffice" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Office" inverseName="contract" inverseEntity="Office" syncable="YES"/>
-        <relationship name="parentService" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Service" inverseName="contract" inverseEntity="Service" syncable="YES"/>
         <relationship name="parentTarif" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tarifs" inverseName="contract" inverseEntity="Tarifs" syncable="YES"/>
         <relationship name="parentWorker" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Worker" inverseName="contract" inverseEntity="Worker" syncable="YES"/>
+    </entity>
+    <entity name="ContractService" representedClassName="ContractService" syncable="YES">
+        <relationship name="parentContract" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contract" inverseName="parentContractService" inverseEntity="Contract" syncable="YES"/>
+        <relationship name="parentService" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Service" inverseName="contractService" inverseEntity="Service" syncable="YES"/>
     </entity>
     <entity name="Dolz" representedClassName="Dolz" syncable="YES">
         <attribute name="cost" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -64,7 +68,7 @@
         <attribute name="cost" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="idService" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="contract" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Contract" inverseName="parentService" inverseEntity="Contract" syncable="YES"/>
+        <relationship name="contractService" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContractService" inverseName="parentService" inverseEntity="ContractService" syncable="YES"/>
     </entity>
     <entity name="Tarifs" representedClassName="Tarifs" syncable="YES">
         <attribute name="cost" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -88,14 +92,15 @@
     </entity>
     <elements>
         <element name="Application" positionX="196" positionY="-465" width="128" height="105"/>
-        <element name="Client" positionX="214" positionY="-333" width="128" height="148"/>
-        <element name="Contract" positionX="-315" positionY="-270" width="128" height="163"/>
+        <element name="Client" positionX="-558" positionY="-306" width="128" height="148"/>
+        <element name="Contract" positionX="-333" positionY="-261" width="128" height="163"/>
+        <element name="ContractService" positionX="-117" positionY="-189" width="128" height="73"/>
         <element name="Dolz" positionX="-155" positionY="-594" width="128" height="133"/>
         <element name="Equipment" positionX="79" positionY="-171" width="128" height="118"/>
         <element name="Limits" positionX="-387" positionY="-81" width="128" height="180"/>
         <element name="Office" positionX="-126" positionY="-409" width="128" height="148"/>
         <element name="Service" positionX="-207" positionY="-9" width="128" height="103"/>
         <element name="Tarifs" positionX="70" positionY="-37" width="128" height="118"/>
-        <element name="Worker" positionX="-333" positionY="-594" width="128" height="195"/>
+        <element name="Worker" positionX="-342" positionY="-582" width="128" height="208"/>
     </elements>
 </model>
