@@ -2,7 +2,7 @@
 //  Worker.h
 //  BDEfanov
 //
-//  Created by Ефанов Сергей on 08.12.13.
+//  Created by Ефанов Сергей on 15.12.13.
 //  Copyright (c) 2013 MyCompany. All rights reserved.
 //
 
@@ -22,7 +22,7 @@
 @property (nonatomic, retain) NSString * otec;
 @property (nonatomic, retain) NSString * passeport;
 @property (nonatomic, retain) NSNumber * tel;
-@property (nonatomic, retain) Dolz *parentDolz;
 @property (nonatomic, retain) Contract *contract;
+@property (nonatomic, retain) Dolz *parentDolz;
 
 @end

@@ -1,21 +1,19 @@
 //
-//  Equipment.m
+//  ContractService.m
 //  BDEfanov
 //
 //  Created by Ефанов Сергей on 15.12.13.
 //  Copyright (c) 2013 MyCompany. All rights reserved.
 //
 
-#import "Equipment.h"
+#import "ContractService.h"
 #import "Contract.h"
+#import "Service.h"
 
 
-@implementation Equipment
+@implementation ContractService
 
-@dynamic firm;
-@dynamic idEquipment;
-@dynamic model;
-@dynamic scancode;
-@dynamic contract;
+@dynamic parentContract;
+@dynamic parentService;
 
 @end
