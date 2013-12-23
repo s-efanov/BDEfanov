@@ -11,13 +11,14 @@
 
 @interface NewWorkerVC : NewBaseVC<UITextFieldDelegate>{
     IBOutlet UITextField *textFieldAdress;
-    IBOutlet UIDatePicker *birthDate;
+    IBOutlet UIDatePicker *pickerDateBirth;
     IBOutlet UIPickerView *pickerDolz;
-    IBOutlet UITextField *textFieldLastName;
-    IBOutlet UITextField *textFieldName;
-    IBOutlet UITextField *textFieldOtec;
+    IBOutlet UITextField *textFieldFIO;
     IBOutlet UITextField *textFieldPasseport;
     IBOutlet UITextField *textFieldTel;
+    IBOutlet UIPickerView *pickerOffice;
+    IBOutlet UITextField *textFieldCost;
+    IBOutlet UITextField *textFieldIndex;
     IBOutlet UISwitch *switchMed;
 }
 

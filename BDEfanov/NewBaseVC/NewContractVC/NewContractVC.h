@@ -9,12 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "NewBaseVC.h"
 
-@interface NewContractVC : NewBaseVC{
+@interface NewContractVC : NewBaseVC<UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate>{
     IBOutlet UIPickerView *pickerTarif;
-    IBOutlet UIPickerView *pickerRouter;
-    IBOutlet UIPickerView *pickerService;
-    IBOutlet UIPickerView *pickerClient;
+    IBOutlet UITextField *textFieldFIOClient;
+    IBOutlet UIDatePicker *datePickerClientBirth;
+    IBOutlet UITableView *tableViewService;
+    IBOutlet UITextField *textFieldAdress;
+    IBOutlet UITextField *textFieldIndex;
     IBOutlet UIPickerView *pickerOffice;
+    IBOutlet UIPickerView *pickerNumberRouter;
 }
 
 @end

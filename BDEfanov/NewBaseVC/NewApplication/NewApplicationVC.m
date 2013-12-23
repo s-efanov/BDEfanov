@@ -7,14 +7,12 @@
 //
 
 #import "NewApplicationVC.h"
-#import "Contract.h"
-#import "Application.h"
-#import "Limits.h"
 
 @interface NewApplicationVC (){
     NSArray *contracts;
-    Contract *contract;
-    Limits *limits;
+    
+    NSString *oldContract;
+    NSString *myContract;
 }
 
 @end
@@ -33,18 +31,33 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	contracts = [Contract MR_findAll];
-    limits = [Limits MR_findAll][0];
     
-    if(contracts.count)
-        contract = contracts[0];
+	contracts = [SQLiteAccess selectManyRowsWithSQL:@"select * from Contract"];
     
     if(self.object){
-        textFieldDescription.text = ((Application*)self.object).descriptioncontract;
-        switchClosed.on = ((Application*)self.object).closed.boolValue;
+        oldContract = [self.object valueForKey:@"numberContract"];
+        myContract = oldContract;
+        textFieldDescription.text = [self.object valueForKey:@"description"];
+        switchClosed.on = ((NSString*)[self.object valueForKey:@"closed"]).boolValue;
+        
+        NSInteger index = 0;
+        
+        for(NSDictionary *dict in contracts){
+            if([[dict valueForKey:@"numberContract"] isEqualToString:oldContract])
+                break;
+            index++;
+        }
+        
+        [pickerContract selectRow: index inComponent:0 animated:YES];
+        return;
     }
-    else{
-        switchClosed.on = NO;
+    
+    switchClosed.on = NO;
+    
+    if(contracts.count){
+        [pickerContract selectRow:0 inComponent:0 animated:YES];
+        oldContract = [contracts[0] valueForKey:@"numberContract"];
+        myContract = oldContract;
     }
 }
 
@@ -57,18 +70,12 @@
         [al show];
         return;
     }
+    
+    if(self.object)
+        [SQLiteAccess updateWithSQL:[NSString stringWithFormat:@"update Application set numberContract = %d, description = '%@', closed = %d where numberApplication = %d", myContract.integerValue, textFieldDescription.text, switchClosed.on, ((NSString*)[self.object valueForKey:@"numberApplication"]).integerValue]];
+    else
+        [SQLiteAccess updateWithSQL:[NSString stringWithFormat:@"insert into Application (numberContract, description, closed) values (%d, '%@', %d)", myContract.integerValue, textFieldDescription.text, switchClosed.on]];
 
-    if(!self.object){
-        self.object = [Application MR_createEntity];
-        ((Application*)self.object).idApplication = [limits nextApplicationId];
-    }
-    
-    ((Application*)self.object).parentContract = contract;
-    ((Application*)self.object).descriptioncontract = textFieldDescription.text;
-    ((Application*)self.object).closed = [NSNumber numberWithBool:switchClosed.on];
-    
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-    
     [self.delegate closePopover];
 }
 
@@ -95,11 +102,11 @@
 }
 
 -(NSString *) pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    return ((Contract*)contracts[row]).idContract.stringValue;
+    return [contracts[row] valueForKey:@"numberContract"];
 }
 
 -(void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    contract = contracts[row];
+    myContract = [contracts[row] valueForKey:@"numberContract"];
 }
 
 - (void)didReceiveMemoryWarning

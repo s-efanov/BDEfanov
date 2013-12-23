@@ -8,17 +8,30 @@
 
 #import "NewOfficeVC.h"
 #import "DetailViewController.h"
-#import "Office.h"
 #import "AppDelegate.h"
-#import "Limits.h"
 
 @interface NewOfficeVC (){
-    Limits *limits;
+
 }
 
 @end
 
 @implementation NewOfficeVC
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    if(self.object){
+        textFieldNameOffice.text = [self.object valueForKey:@"nameOffice"];
+        textFieldAdress.text = [self.object valueForKey:@"adress"];
+        textFieldInfo.text = [self.object valueForKey:@"info"];
+        textFieldTel.text = [self.object valueForKey:@"tel"];
+        
+        textFieldNameOffice.userInteractionEnabled = NO;
+        textFieldNameOffice.backgroundColor = [UIColor lightGrayColor];
+    }
+}
 
 -(IBAction)btnSave:(id)sender{
     
@@ -30,16 +43,10 @@
         return;
     }
     
-    if(!self.object){
-        self.object = [Office MR_createEntity];
-        ((Office*)self.object).idOffice = [limits nextOfficeId];
-    }
-    ((Office*)self.object).name = textFieldNameOffice.text;
-    ((Office*)self.object).adress = textFieldAdress.text;
-    ((Office*)self.object).index = [NSNumber numberWithInteger:textFieldIndex.text.integerValue];
-    ((Office*)self.object).info = textFieldInfo.text;
-    
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    if(self.object)
+        [SQLiteAccess updateWithSQL:[NSString stringWithFormat:@"update Office set tel = %d, adress = '%@', info = '%@' where nameOffice = '%@'", textFieldTel.text.integerValue, textFieldAdress.text, textFieldInfo.text, textFieldNameOffice.text]];
+    else
+        [SQLiteAccess updateWithSQL:[NSString stringWithFormat:@"insert into Office (tel, adress, info, nameOffice) values (%d, '%@', '%@', '%@')", textFieldTel.text.integerValue, textFieldInfo.text, textFieldAdress.text, textFieldNameOffice.text]];
     
     [self.delegate closePopover];
 }
@@ -55,8 +62,8 @@
         [str appendString:@"Адрес офиса не может быть пустым\n"];
     }
     
-    if([textFieldIndex.text isEqualToString:@""]){
-        [str appendString:@"Индекс не может быть пустым\n"];
+    if([textFieldTel.text isEqualToString:@""]){
+        [str appendString:@"Введите номер телефона\n"];
     }
     
     if([textFieldInfo.text isEqualToString:@""]){
@@ -64,19 +71,6 @@
     }
     
     return str;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    limits = [Limits MR_findAll][0];
-    
-    if(self.object){
-        textFieldAdress.text = ((Office*)self.object).adress;
-        textFieldIndex.text = ((Office*)self.object).index.stringValue;
-        textFieldInfo.text = ((Office*)self.object).info;
-        textFieldNameOffice.text = ((Office*)self.object).name;
-    }
 }
 
 - (void)didReceiveMemoryWarning

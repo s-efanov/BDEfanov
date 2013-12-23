@@ -13,6 +13,7 @@
     IBOutlet UIImageView *myImage;
     IBOutlet UILabel *myTitle;
     IBOutlet UILabel *myCount;
+    IBOutlet UILabel *myTitleCount;
     IBOutlet UILabel *myWorker;
 }
 

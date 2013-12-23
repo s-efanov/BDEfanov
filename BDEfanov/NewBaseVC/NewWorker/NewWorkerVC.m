@@ -7,14 +7,14 @@
 //
 
 #import "NewWorkerVC.h"
-#import "Dolz.h"
-#import "Worker.h"
-#import "Limits.h"
 
 @interface NewWorkerVC (){
     NSArray *dolzs;
-    Limits *limits;
+    NSArray *offices;
     NSString *nameDolz;
+    NSString *nameOffice;
+    NSString *oldOffice;
+    NSString *oldDolz;
 }
 
 @end
@@ -33,20 +33,66 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	dolzs = [Dolz MR_findAll];
-    limits = [Limits MR_findAll][0];
     
-    if(dolzs.count)
-        nameDolz = ((Dolz*)dolzs[0]).nameDolz;
+    dolzs = [SQLiteAccess selectManyRowsWithSQL:@"select * from Dolz"];
+    offices = [SQLiteAccess selectManyRowsWithSQL:@"select * from Office"];
     
     if(self.object){
-        textFieldName.text = ((Worker*)self.object).name;
-        textFieldLastName.text = ((Worker*)self.object).lastname;
-        textFieldOtec.text = ((Worker*)self.object).otec;
-        textFieldPasseport.text = ((Worker*)self.object).passeport;
-        textFieldAdress.text = ((Worker*)self.object).adress;
-        textFieldTel.text = ((Worker*)self.object).tel.stringValue;
-        switchMed.on = ((Worker*)self.object).med.boolValue;
+        textFieldFIO.userInteractionEnabled = NO;
+        textFieldFIO.backgroundColor = [UIColor lightGrayColor];
+        textFieldPasseport.backgroundColor = [UIColor lightGrayColor];
+        textFieldPasseport.userInteractionEnabled = NO;
+        
+        textFieldIndex.text = [self.object valueForKey:@"indexCost"];
+        
+        oldDolz = [self.object valueForKey:@"nameDolz"];
+        oldOffice = [self.object valueForKey:@"nameOffice"];
+        
+        nameOffice = oldOffice;
+        nameDolz = oldDolz;
+        
+        textFieldFIO.text = [self.object valueForKey:@"fioWorker"];
+        textFieldPasseport.text = [self.object valueForKey:@"numberPasseport"];
+        textFieldAdress.text = [self.object valueForKey:@"adress"];
+        textFieldTel.text = [self.object valueForKey:@"tel"];
+        switchMed.on = ((NSString*)[self.object valueForKey:@"med"]).integerValue;
+        
+        textFieldCost.text = [self.object valueForKey:@"cost"];
+        
+        
+        NSDateFormatter *dateFormat = [NSDateFormatter new];
+        [dateFormat setDateFormat:@"dd.MM.yyyy"];
+        NSDate *date = [dateFormat dateFromString:[self.object valueForKey:@"birthDate"]];
+        [pickerDateBirth setDate:date];
+        
+        //устанавливаем офис в пикер
+        NSInteger index = 0;
+        
+        for(NSDictionary *dict in offices){
+            if([[dict valueForKey:@"nameOffice"] isEqualToString:oldOffice])
+                break;
+            index++;
+        }
+        
+        [pickerOffice selectRow:index inComponent:0 animated:YES];
+        
+        //устанавливаем должность в пикер
+        index = 0;
+        
+        for(NSDictionary *dict in dolzs){
+            if([[dict valueForKey:@"nameDolz"] isEqualToString:oldDolz])
+                break;
+            index++;
+        }
+        [pickerDolz selectRow:index inComponent:0 animated:YES];
+        return;
+    }
+    
+    
+    if(dolzs.count){
+        switchMed.on = NO;
+        [pickerDolz selectRow:0 inComponent:0 animated:YES];
+        nameDolz = [dolzs[0] valueForKey:@"nameDolz"];
     }
 }
 
@@ -60,24 +106,14 @@
         return;
     }
     
-    Worker *worker = [Worker MR_createEntity];
-    
-    worker.idWorker = [limits nextWorkerId];
-    worker.adress = textFieldAdress.text;
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"nameDolz = %@", nameDolz];
-    Dolz *dolz = [Dolz MR_findAllWithPredicate:predicate][0];
-    worker.parentDolz = dolz;
-    
-    worker.birthdate = birthDate.date;
-    worker.med = [NSNumber numberWithBool:switchMed.on];
-    worker.name = textFieldName.text;
-    worker.lastname = textFieldLastName.text;
-    worker.otec = textFieldOtec.text;
-    worker.passeport = textFieldPasseport.text;
-    worker.tel = [NSNumber numberWithInteger:textFieldTel.text.integerValue];
-    
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    NSDateFormatter *dateFormat = [NSDateFormatter new];
+    [dateFormat setDateFormat:@"dd.MM.yyyy"];
+    NSString *myDate = [dateFormat stringFromDate:pickerDateBirth.date];
+
+    if(self.object)
+        [SQLiteAccess updateWithSQL:[NSString stringWithFormat:@"update Worker set birthDate = '%@', nameDolz = '%@', nameOffice = '%@', med = %d, cost = %d, adress = '%@', tel = %d, indexCost = %d where fioWorker = '%@' and numberPasseport =  %d", myDate, nameDolz, nameOffice, switchMed.on, textFieldCost.text.integerValue, textFieldAdress.text, textFieldTel.text.integerValue, textFieldIndex.text.integerValue, textFieldFIO.text, textFieldPasseport.text.integerValue]];
+    else
+        [SQLiteAccess insertWithSQL:[NSString stringWithFormat:@"insert into Worker (birthDate, nameDolz, nameOffice, med, cost, adress, tel, fioWorker, numberPasseport, indexCost) values ('%@', '%@', '%@', %d, %d, '%@', %d, '%@', %d, %d)", myDate, nameDolz, nameOffice, switchMed.on, textFieldCost.text.integerValue, textFieldAdress.text, textFieldTel.text.integerValue, textFieldFIO.text, textFieldPasseport.text.integerValue, textFieldIndex.text.integerValue]];
     
     [self.delegate closePopover];
 }
@@ -85,16 +121,12 @@
 -(NSString*) validate{
     NSMutableString *str = [NSMutableString new];
     
-    if([textFieldName.text isEqualToString:@""]){
-        [str appendString:@"Имя не может быть пустым\n"];
+    if([textFieldFIO.text isEqualToString:@""]){
+        [str appendString:@"Введите ФИО\n"];
     }
     
-    if([textFieldLastName.text isEqualToString:@""]){
-        [str appendString:@"Фамилия не может быть пустой\n"];
-    }
-    
-    if([textFieldOtec.text isEqualToString:@""]){
-        [str appendString:@"Отчество не может быть пустым\n"];
+    if([textFieldCost.text isEqualToString:@""]){
+        [str appendString:@"Введите оклад\n"];
     }
     
     if([textFieldPasseport.text isEqualToString:@""]){
@@ -113,6 +145,10 @@
         [str appendString:@"В организации нет должностей\n"];
     }
     
+    if(!offices.count){
+        [str appendString:@"Нет офисов\n"];
+    }
+    
     return str;
 }
 
@@ -121,15 +157,32 @@
 }
 
 -(NSInteger) pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    return dolzs.count;
+    
+    if(pickerView.tag == 0)
+        return dolzs.count;
+    
+    if(pickerView.tag == 1)
+        return offices.count;
+    
+    return 0;
 }
 
 -(NSString *) pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    return ((Dolz*)dolzs[row]).nameDolz;
+    if(pickerView.tag == 0)
+        return [dolzs[row] valueForKey:@"nameDolz"];
+    
+    if(pickerView.tag == 1)
+        return [offices[row] valueForKey:@"nameOffice"];
+    
+    return nil;
 }
 
 -(void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    nameDolz = ((Dolz*)dolzs[row]).nameDolz;
+    if(pickerView.tag == 0)
+        nameDolz = [dolzs[row] valueForKey: @"nameDolz"];
+    
+    if(pickerView.tag == 1)
+        nameOffice = [offices[row] valueForKey:@"nameOffice"];
 }
 
 - (void)didReceiveMemoryWarning

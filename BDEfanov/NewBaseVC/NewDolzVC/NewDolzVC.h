@@ -10,10 +10,9 @@
 #import "NewBaseVC.h"
 
 @interface NewDolzVC : NewBaseVC<UIPickerViewDataSource, UIPickerViewDelegate>{
-    IBOutlet UIPickerView *pickerOffice;
     IBOutlet UITextField *textFieldWork;
     IBOutlet UITextField *textFieldName;
-    IBOutlet UITextField *textFieldCost;
+    IBOutlet UIPickerView *pickerGraph;
 }
 
 @end

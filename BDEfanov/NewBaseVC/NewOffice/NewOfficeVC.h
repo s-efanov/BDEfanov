@@ -11,7 +11,7 @@
 
 @interface NewOfficeVC : NewBaseVC<UITextFieldDelegate>{
     IBOutlet UITextField *textFieldNameOffice;
-    IBOutlet UITextField *textFieldIndex;
+    IBOutlet UITextField *textFieldTel;
     IBOutlet UITextField *textFieldAdress;
     IBOutlet UITextField *textFieldInfo;
 }

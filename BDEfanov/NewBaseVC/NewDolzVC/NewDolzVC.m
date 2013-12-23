@@ -7,19 +7,14 @@
 //
 
 #import "NewDolzVC.h"
-#import "Office.h"
-#import "Dolz.h"
-#import "Limits.h"
 
-@interface NewDolzVC (){
-    NSArray *offices;
-    Limits *limits;
-    NSString *nameOffice;
+@implementation NewDolzVC{
+    NSArray *graphics;
+    NSString *oldGraphic;
+    NSString *graphic;
+    NSString *oldDolz;
+    NSString *oldObligations;
 }
-
-@end
-
-@implementation NewDolzVC
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,16 +28,48 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	offices = [Office MR_findAll];
-    limits = [Limits MR_findAll][0];
-    
-    if(offices.count)
-        nameOffice = ((Office*)offices[0]).name;
+	graphics = [SQLiteAccess selectManyRowsWithSQL:@"select * from Graph"];
     
     if(self.object){
-        textFieldName.text = ((Dolz*)self.object).nameDolz;
-        textFieldWork.text = ((Dolz*)self.object).work;
-        textFieldCost.text = ((Dolz*)self.object).cost.stringValue;
+        textFieldName.text = [self.object valueForKey:@"nameDolz"];
+        textFieldName.userInteractionEnabled = NO;
+        textFieldName.backgroundColor = [UIColor lightGrayColor];
+        oldDolz = textFieldName.text;
+        
+        //устанавливаем график работы в пикер вью
+        oldGraphic = [self.object valueForKey:@"graph"];
+        graphic = oldGraphic;
+        NSInteger index = 0;
+        
+        for(NSDictionary *dict in graphics){
+            if([[dict valueForKey:@"graph"] isEqualToString:oldGraphic])
+                break;
+            index++;
+        }
+        
+        [pickerGraph selectRow: index inComponent:0 animated:YES];
+        
+        //устанавливаем обязанности сотрудников
+        NSArray *obligations = [SQLiteAccess selectManyRowsWithSQL:[NSString stringWithFormat:@"select obligation from ObligationWorker where nameDolz = '%@'", textFieldName.text]];
+        
+        NSMutableString *obligation = [NSMutableString new];
+        
+        for (NSDictionary *dict in obligations){
+            [obligation appendString:[dict valueForKey:@"obligation"]];
+            [obligation appendString:@"; "];
+        }
+        
+        if(obligation.length)
+            [obligation deleteCharactersInRange:NSMakeRange(obligation.length - 2, 2)];
+        
+        textFieldWork.text = obligation;
+        oldObligations = obligation;
+        return;
+    }
+    
+    if(graphics.count){
+        [pickerGraph selectRow:0 inComponent:0 animated:YES];
+        oldGraphic = [graphics[0] valueForKey:@"graph"];
     }
 }
 
@@ -56,24 +83,19 @@
         return;
     }
     
-    if(!self.object){
-        self.object = [Dolz MR_createEntity];
-        ((Dolz*)self.object).idDolz = [limits nextDolzId];
+    if(self.object)
+        [SQLiteAccess updateWithSQL:[NSString stringWithFormat:@"update Dolz set graph = '%@' where nameDolz = '%@'", graphic, oldDolz]];
+    else
+        [SQLiteAccess updateWithSQL:[NSString stringWithFormat:@"insert into Dolz (nameDolz, graph) values ('%@', '%@')", textFieldName.text, graphic]];
+    
+    [SQLiteAccess deleteWithSQL:[NSString stringWithFormat:@"delete from ObligationWorker where nameDolz = '%@'", oldDolz]];
+    
+    NSArray *arr = [textFieldWork.text componentsSeparatedByString:@"; "];
+    
+    for(NSString *str in arr){
+        if(![str isEqualToString:@""])
+            [SQLiteAccess insertWithSQL:[NSString stringWithFormat:@"insert into ObligationWorker (nameDolz, obligation) values ('%@', '%@')", textFieldName.text, str]];
     }
-    
-    ((Dolz*)self.object).cost = [NSNumber numberWithInteger:textFieldCost.text.integerValue];
-    ((Dolz*)self.object).nameDolz = textFieldName.text;
-    ((Dolz*)self.object).work = textFieldWork.text;
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", nameOffice];
-    Office *office = [Office MR_findAllWithPredicate:predicate][0];
-    ((Dolz*)self.object).parentOffice = office;
-    
-    if(!self.object){
-        [office addDotDolzObject:((Dolz*)self.object)];
-    }
-    
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     [self.delegate closePopover];
 }
@@ -85,16 +107,12 @@
         [str appendString:@"Название должности не может быть пустым\n"];
     }
     
-    if([textFieldCost.text isEqualToString:@""]){
-        [str appendString:@"Оклад не может быть пустым\n"];
-    }
-    
     if([textFieldWork.text isEqualToString:@""]){
         [str appendString:@"Обязанности не могут быть пустыми\n"];
     }
     
-    if(!offices.count){
-        [str appendString:@"В приложении нет офисов\n"];
+    if(!graphics.count){
+        [str appendString:@"Не выбран график работы\n"];
     }
     
     return str;
@@ -105,15 +123,15 @@
 }
 
 -(NSInteger) pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    return offices.count;
+    return graphics.count;
 }
 
 -(NSString *) pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    return ((Office*)offices[row]).name;
+    return [graphics[row] valueForKey:@"graph"];
 }
 
 -(void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-   nameOffice = ((Office*)offices[row]).name;
+   graphic = [graphics[row] valueForKey:@"graph"];
 }
 
 - (void)didReceiveMemoryWarning

@@ -8,14 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>{
+@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>{
     IBOutlet UITableView *myTable;
     IBOutlet UIButton *btn;
     IBOutlet UIButton *infoBtn;
     UIPopoverController *myPopover;
 }
-
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 -(void) closePopover;
 -(IBAction)btnNew:(id)sender;

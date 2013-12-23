@@ -7,11 +7,9 @@
 //
 
 #import "NewServiceVC.h"
-#import "Service.h"
-#import "Limits.h"
 
 @interface NewServiceVC (){
-    Limits *limits;
+
 }
 
 @end
@@ -30,11 +28,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	limits = [Limits MR_findAll][0];
     
     if(self.object){
-        textFieldCost.text = ((Service*)self.object).cost.stringValue;
-        textFieldName.text = ((Service*)self.object).name;
+        textFieldCost.text = [self.object valueForKey:@"costService"];
+        textFieldName.text = [self.object valueForKey:@"nameService"];
+        
+        textFieldName.userInteractionEnabled = NO;
+        textFieldName.backgroundColor = [UIColor lightGrayColor];
     }
 }
 
@@ -48,15 +48,10 @@
         return;
     }
     
-    if(!self.object){
-        self.object = [Service MR_createEntity];
-        ((Service*)self.object).idService = [limits nextServiceId];
-    }
-    
-    ((Service*)self.object).name = textFieldName.text;
-    ((Service*)self.object).cost = [NSNumber numberWithInteger:textFieldCost.text.integerValue];
-    
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    if(self.object)
+        [SQLiteAccess updateWithSQL:[NSString stringWithFormat:@"update Service set costService = %d where nameService = '%@'", textFieldCost.text.integerValue, textFieldName.text]];
+    else
+        [SQLiteAccess insertWithSQL:[NSString stringWithFormat:@"insert into Service (nameService, costService) values ('%@', %d)", textFieldName.text, textFieldCost.text.integerValue]];
     
     [self.delegate closePopover];
 }
@@ -69,7 +64,7 @@
     }
     
     if([textFieldName.text isEqualToString:@""]){
-        [str appendString:@"Название услуги не может быть пустым\n"];
+        [str appendString:@"Наименование услуги не может быть пустым\n"];
     }
     
     return str;

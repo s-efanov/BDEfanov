@@ -16,7 +16,6 @@
 
 @property (nonatomic, retain) id<BaseVCProtocol> delegate;
 @property (nonatomic, retain) id object;
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 -(IBAction)btnSave:(id)sender;
 -(IBAction)btnCancel:(id)sender;

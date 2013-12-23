@@ -7,12 +7,10 @@
 //
 
 #import "NewTariffVC.h"
-#import "Tarifs.h"
 #import "DetailViewController.h"
-#import "Limits.h"
 
 @interface NewTariffVC (){
-    Limits *limits;
+
 }
 
 @end
@@ -31,12 +29,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	limits = [Limits MR_findAll][0];
     
     if(self.object){
-        textFieldNameTariff.text = ((Tarifs*)self.object).name;
-        textFieldSpeed.text = ((Tarifs*)self.object).speed.stringValue;
-        textFieldCost.text = ((Tarifs*)self.object).cost.stringValue;
+        textFieldNameTariff.text = [self.object valueForKey:@"nameTarif"];
+        textFieldNameTariff.userInteractionEnabled = NO;
+        textFieldNameTariff.backgroundColor = [UIColor lightGrayColor];
+        textFieldSpeed.text = [self.object valueForKey:@"speed"];
+        textFieldCost.text = [self.object valueForKey:@"cost"];
     }
 }
 
@@ -50,16 +49,10 @@
         return;
     }
     
-    if(!self.object){
-        self.object = [Tarifs MR_createEntity];
-        ((Tarifs*)self.object).idTariff = [limits nextTarifsId];
-    }
-    
-    ((Tarifs*)self.object).name = textFieldNameTariff.text;
-    ((Tarifs*)self.object).cost = [NSNumber numberWithInteger:textFieldCost.text.integerValue];
-    ((Tarifs*)self.object).speed = [NSNumber numberWithInteger:textFieldSpeed.text.integerValue];
-    
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    if(self.object)
+        [SQLiteAccess updateWithSQL:[NSString stringWithFormat:@"update Tarif set speed = %d, cost = %d where nameTarif = '%@'", textFieldSpeed.text.integerValue, textFieldCost.text.integerValue, textFieldNameTariff.text]];
+    else
+        [SQLiteAccess updateWithSQL:[NSString stringWithFormat:@"insert into Tarif (speed, cost, nameTarif) values (%d, %d, '%@')", textFieldSpeed.text.integerValue, textFieldCost.text.integerValue, textFieldNameTariff.text]];
     
     [self.delegate closePopover];
 }

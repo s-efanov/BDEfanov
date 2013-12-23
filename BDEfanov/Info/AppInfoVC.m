@@ -7,9 +7,6 @@
 //
 
 #import "AppInfoVC.h"
-#import "Application.h"
-#import "Worker.h"
-#import "Dolz.h"
 #import "AppDelegate.h"
 #import "Constants.h"
 
@@ -36,6 +33,10 @@
 }
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    if([str isEqualToString:MY_SEO])
+        return 3;
+    
     return arr.count;
 }
 
@@ -53,20 +54,55 @@
     
     if([str isEqualToString:MY_APPLICATION]){
         [label appendString:@"Заявка № "];
-        [label appendString:((Application*)arr[indexPath.row]).idApplication.stringValue];
-        [label appendString:@" выполнена.                    Роспись сотрудника  _________________"];
+        [label appendString:[arr[indexPath.row] valueForKey:@"numberApplication"]];
+        [label appendString:@" выполнена.                    Подпись сотрудника  _________________"];
     }
     
     if([str isEqualToString:MY_WORKER]){
-        [label appendString:@"Сотрудник "];
-        [label appendString:((Worker*)arr[indexPath.row]).lastname];
-        [label appendString:@" "];
-        [label appendString:((Worker*)arr[indexPath.row]).name];
-        [label appendString:@" "];
-        [label appendString:((Worker*)arr[indexPath.row]).otec];
-        [label appendString:@" получает "];
-        [label appendString:((Worker*)arr[indexPath.row]).parentDolz.cost.stringValue];
-        [label appendString:@" руб."];
+        [label appendString:[arr[indexPath.row] valueForKey:@"fioWorker"]];
+        [label appendString:@" \t\t"];
+        [label appendString:[arr[indexPath.row] valueForKey:@"cost"]];
+    }
+    
+    static NSInteger sumIn, sumOut, sumAll;
+    NSArray *mySummArr;
+    
+    if([str isEqualToString:MY_SEO]){
+        switch (indexPath.row) {
+            case 0:
+                [label appendString:@"Доход компании: "];
+                
+                mySummArr = [SQLiteAccess selectManyRowsWithSQL:@"select * from Contract"];
+                sumIn = 0;
+                
+                for(NSDictionary *dict in mySummArr){
+                    sumIn += ((NSString*)[dict valueForKey:@"summCost"]).integerValue;
+                }
+                [label appendFormat:@"%d руб.", sumIn];
+                
+                break;
+            case 1:
+                [label appendString:@"Расход компании: "];
+                
+                mySummArr = [SQLiteAccess selectManyRowsWithSQL:@"select * from Worker"];
+                sumOut = 0;
+                for(NSDictionary *dict in mySummArr){
+                    sumOut += ((NSString*)[dict valueForKey:@"summCost"]).integerValue;
+                }
+                [label appendFormat:@"%d руб.", sumOut];
+                
+                break;
+            case 2:
+                
+                sumAll = sumIn - sumOut;
+                
+                [label appendString:@"Всего: "];
+                [label appendFormat:@"%d руб.", sumAll];
+                
+                break;
+            default:
+                break;
+        }
     }
     
     cell.textLabel.text = label;
@@ -82,17 +118,22 @@
     str = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).entity;
     
     if([str isEqualToString:MY_APPLICATION]){
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"closed = YES"];
-        arr = [Application MR_findAllWithPredicate:predicate];
-        myTitle.text = @"Отчет о выполнении заявок";
+        arr = [SQLiteAccess selectManyRowsWithSQL:@"select * from Application where closed = 1"];
+        myTitle.text = @"Отчет о работе технической поддержки";
         myWorker.text = @"Руководитель тех. поддержки";
     }
     
     if([str isEqualToString:MY_WORKER]){
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"parentDolz.cost > 20000"];
-        arr = [Worker MR_findAllWithPredicate:predicate];
-        myTitle.text = @"Отчет о заработной плате";
+        arr = [SQLiteAccess selectManyRowsWithSQL:@"select * from Worker where cost > 5000"];
+        myTitle.text = @"Отчет о заработной плате сотрудников";
         myWorker.text = @"Директор";
+    }
+    
+    if([str isEqualToString:MY_SEO]){
+        myTitle.text = @"Отчет о доходах компании";
+        myWorker.text = @"Директор";
+        myTitleCount.hidden = YES;
+        myCount.hidden = YES;
     }
     
     myCount.text = [NSString stringWithFormat:@"%d", arr.count];

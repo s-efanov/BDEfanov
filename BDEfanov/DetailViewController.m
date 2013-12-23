@@ -12,23 +12,11 @@
 #import "Constants.h"
 #import "EnterVC.h"
 
-#import "Office.h"
-#import "Contract.h"
-#import "Tarifs.h"
-#import "Worker.h"
-#import "Dolz.h"
-#import "Service.h"
-#import "Application.h"
-#import "Equipment.h"
-#import "Client.h"
-#import "Limits.h"
-
 @interface DetailViewController (){
     UIPopoverController *popover;
-    NSManagedObjectContext *managedObjectContext;
     NSString *myEntity;
+    NSString *myController;
     NSString *str;
-    NSString *sort;
 }
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
@@ -52,10 +40,6 @@
     }        
 }
 
--(void) controllerDidChangeContent:(NSFetchedResultsController *)controller{
-    [myTable reloadData];
-}
-
 -(IBAction)btnExit:(id)sender{
     UIWindow *window = [UIApplication sharedApplication].keyWindow;;
     
@@ -76,129 +60,87 @@
     }
     
     NSMutableString *labelForRow = [NSMutableString new];
+    NSDictionary *fetch = [SQLiteAccess selectManyRowsWithSQL:[NSString stringWithFormat:@"select * from %@", myEntity]][indexPath.row];
     
     if([str isEqualToString:MY_OFFICE]){
-        Office *office = [Office MR_findAll][indexPath.row];
-        [labelForRow appendString: office.name];
+        [labelForRow appendString: [fetch valueForKey:@"nameOffice"]];
+        [labelForRow appendString:@" ("];
+        [labelForRow appendString:[fetch valueForKey:@"adress"]];
+        [labelForRow appendString:@" )"];
+    }
+    
+    if([str isEqualToString:MY_GRAPH]){
+        [labelForRow appendString: [fetch valueForKey:@"graph"]];
+        [labelForRow appendString:@" часы работы: "];
+        [labelForRow appendString:[fetch valueForKey:@"clock"]];
         [labelForRow appendString:@" "];
-        [labelForRow appendString:office.adress];
     }
     
     if([str isEqualToString:MY_SERVICE]){
-        Service *service = [Service MR_findAll][indexPath.row];
-        [labelForRow appendString: service.name];
+        [labelForRow appendString: [fetch valueForKey:@"nameService"]];
         [labelForRow appendString:@" "];
-        [labelForRow appendString:service.cost.stringValue];
+        [labelForRow appendString:[fetch valueForKey:@"costService"]];
         [labelForRow appendString:@" руб."];
     }
     
-    if([str isEqualToString:MY_TARIFF]){
-        Tarifs *tarifs = [Tarifs MR_findAll][indexPath.row];
-        [labelForRow appendString: tarifs.name];
+    if([str isEqualToString:MY_TARIF]){
+        [labelForRow appendString: [fetch valueForKey:@"nameTarif"]];
         [labelForRow appendString:@" Скорость: "];
-        [labelForRow appendString:tarifs.speed.stringValue];
+        [labelForRow appendString:[fetch valueForKey:@"speed"]];
         [labelForRow appendString:@" Мбит/с"];
     }
     
-    if([str isEqualToString:MY_EQUIPMENT]){
-        Equipment *equipment = [Equipment MR_findAll][indexPath.row];
-        [labelForRow appendString: equipment.firm];
+    if([str isEqualToString:MY_ROUTER]){
+        [labelForRow appendString: [fetch valueForKey:@"numberRouter"]];
         [labelForRow appendString:@" "];
-        [labelForRow appendString:equipment.model];
+        [labelForRow appendString: [fetch valueForKey:@"firma"]];
         [labelForRow appendString:@" "];
-        [labelForRow appendString:equipment.scancode.stringValue];
-    }
-    
-    if([str isEqualToString:MY_CLIENT]){
-        Client *client = [Client MR_findAll][indexPath.row];
-        [labelForRow appendString: client.lastName];
-        [labelForRow appendString:@" "];
-        [labelForRow appendString: client.name];
-        [labelForRow appendString:@" "];
-        [labelForRow appendString: client.otec];
+        [labelForRow appendString:[fetch valueForKey:@"model"]];
+        
+        if([fetch valueForKey:@"numberContract"] != [NSNull null])
+            [labelForRow appendString:@" привязан к договору"];
+        else
+            [labelForRow appendString:@" на складе"];
     }
     
     if([str isEqualToString:MY_WORKER]){
-        Worker *worker = [Worker MR_findAll][indexPath.row];
-        [labelForRow appendString: worker.name];
+        [labelForRow appendString:[fetch valueForKey:@"fioWorker"]];
         [labelForRow appendString:@" "];
-        [labelForRow appendString:worker.lastname];
+        [labelForRow appendString:[fetch valueForKey:@"nameDolz"]];
+    }
+    
+    if([str isEqualToString:MY_MODEL]){
+        [labelForRow appendString:[fetch valueForKey:@"firma"]];
         [labelForRow appendString:@" "];
-        [labelForRow appendString:worker.otec];
-        [labelForRow appendString:@" "];
-        
-        [labelForRow appendString:worker.parentDolz.nameDolz];
+        [labelForRow appendString:[fetch valueForKey:@"model"]];
+        [labelForRow appendString:@" максимальная скорость: "];
+        [labelForRow appendString:[fetch valueForKey:@"maxSpeed"]];
+        [labelForRow appendString:@" количество слотов: "];
+        [labelForRow appendString:[fetch valueForKey:@"numberSlot"]];
     }
     
     if([str isEqualToString:MY_APPLICATION]){
-        Application *application = [Application MR_findAll][indexPath.row];
         [labelForRow appendString:@"Заявка: "];
-        [labelForRow appendString: application.idApplication.stringValue];
+        [labelForRow appendString: [fetch valueForKey:@"numberApplication"]];
         [labelForRow appendString:@" по договору "];
-        [labelForRow appendString:application.parentContract.idContract.stringValue];
+        [labelForRow appendString:[fetch valueForKey:@"numberContract"]];
     }
     
     if([str isEqualToString:MY_CONTRACT]){
-        Contract *contract = [Contract MR_findAll][indexPath.row];
         [labelForRow appendString:@"№ "];
-        [labelForRow appendString: contract.idContract.stringValue];
+        [labelForRow appendString: [fetch valueForKey:@"numberContract"]];
         
         [labelForRow appendString:@" "];
-        [labelForRow appendString:contract.parentClient.lastName];
-        [labelForRow appendString:@" "];
-        [labelForRow appendString:contract.parentClient.name];
-        [labelForRow appendString:@" "];
-        [labelForRow appendString:contract.parentClient.otec];
+        [labelForRow appendString:[fetch valueForKey:@"fioClient"]];
     }
     
     if([str isEqualToString:MY_DOLZ]){
-        Dolz *dolz = [Dolz MR_findAll][indexPath.row];
-        [labelForRow appendString: dolz.nameDolz];
-        [labelForRow appendString:@" "];
-        [labelForRow appendString: dolz.parentOffice.name];
+        [labelForRow appendString: [fetch valueForKey:@"nameDolz"]];
     }
     
     cell.textLabel.text = labelForRow;
     
     return cell;
-}
-
-- (NSFetchedResultsController *)fetchedResultsController
-{
-    NSString *str = [[_fetchedResultsController fetchRequest] entityName];
-    if (_fetchedResultsController != nil && [str isEqualToString:myEntity]) {
-        return _fetchedResultsController;
-    }
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:myEntity inManagedObjectContext:managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    // Set the batch size to a suitable number.
-    [fetchRequest setFetchBatchSize:20];
-    
-    // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sort ascending:NO];
-    NSArray *sortDescriptors = @[sortDescriptor];
-    
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
-    // Edit the section name key path and cache name if appropriate.
-    // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:myEntity];
-    aFetchedResultsController.delegate = self;
-    self.fetchedResultsController = aFetchedResultsController;
-    
-	NSError *error = nil;
-	if (![self.fetchedResultsController performFetch:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
-	}
-    
-    return _fetchedResultsController;
 }
 
 -(void) closePopover{
@@ -208,54 +150,59 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSDictionary *dict;
+    
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
         if([str isEqualToString:MY_OFFICE]){
-            Office *office = [Office MR_findAll][indexPath.row];
-            [office MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
+            dict = [SQLiteAccess selectManyRowsWithSQL:[NSString stringWithFormat:@"select * from %@", TABLE_OFFICE]][indexPath.row];
+            [SQLiteAccess deleteWithSQL:[NSString stringWithFormat:@"delete from %@ where nameOffice = '%@'", TABLE_OFFICE, [dict valueForKey:@"nameOffice"]]];
         }
         
         if([str isEqualToString:MY_SERVICE]){
-            Service *service = [Service MR_findAll][indexPath.row];
-            [service MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
+            dict = [SQLiteAccess selectManyRowsWithSQL:[NSString stringWithFormat:@"select * from %@", TABLE_SERVICE]][indexPath.row];
+            [SQLiteAccess deleteWithSQL:[NSString stringWithFormat:@"delete from %@ where nameService = '%@'", TABLE_SERVICE, [dict valueForKey:@"nameService"]]];
         }
         
-        if([str isEqualToString:MY_TARIFF]){
-            Tarifs *tarif = [Tarifs MR_findAll][indexPath.row];
-            [tarif MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
+        if([str isEqualToString:MY_GRAPH]){
+            dict = [SQLiteAccess selectManyRowsWithSQL:[NSString stringWithFormat:@"select * from %@", TABLE_GRAPH]][indexPath.row];
+            [SQLiteAccess deleteWithSQL:[NSString stringWithFormat:@"delete from %@ where graph = '%@'", TABLE_GRAPH, [dict valueForKey:@"graph"]]];
         }
         
-        if([str isEqualToString:MY_EQUIPMENT]){
-            Equipment *equipment = [Equipment MR_findAll][indexPath.row];
-            [equipment MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
+        if([str isEqualToString:MY_TARIF]){
+            dict = [SQLiteAccess selectManyRowsWithSQL:[NSString stringWithFormat:@"select * from %@", TABLE_TARIF]][indexPath.row];
+            [SQLiteAccess deleteWithSQL:[NSString stringWithFormat:@"delete from %@ where nameTarif = '%@'", TABLE_TARIF, [dict valueForKey:@"nameTarif"]]];
         }
         
-        if([str isEqualToString:MY_CLIENT]){
-            Client *client = [Client MR_findAll][indexPath.row];
-            [client MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
+        if([str isEqualToString:MY_ROUTER]){
+            dict = [SQLiteAccess selectManyRowsWithSQL:[NSString stringWithFormat:@"select * from %@", TABLE_ROUTER]][indexPath.row];
+            [SQLiteAccess deleteWithSQL:[NSString stringWithFormat:@"delete from %@ where numberRouter = '%@'", TABLE_ROUTER, [dict valueForKey:@"numberRouter"]]];
+        }
+        
+        if([str isEqualToString:MY_MODEL]){
+            dict = [SQLiteAccess selectManyRowsWithSQL:[NSString stringWithFormat:@"select * from %@", TABLE_MODEL]][indexPath.row];
+            [SQLiteAccess deleteWithSQL:[NSString stringWithFormat:@"delete from %@ where firma = '%@' and model = '%@'", TABLE_MODEL, [dict valueForKey:@"firma"], [dict valueForKey:@"model"]]];
         }
         
         if([str isEqualToString:MY_WORKER]){
-            Worker *worker = [Worker MR_findAll][indexPath.row];
-            [worker MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
+            dict = [SQLiteAccess selectManyRowsWithSQL:[NSString stringWithFormat:@"select * from %@", TABLE_WORKER]][indexPath.row];
+            [SQLiteAccess deleteWithSQL:[NSString stringWithFormat:@"delete from %@ where fioWorker = '%@', numberPasseport = %d", TABLE_WORKER, [dict valueForKey:@"fioWorker"], ((NSString*)[dict valueForKey:@"numberPasseport"]).integerValue]];
         }
         
         if([str isEqualToString:MY_APPLICATION]){
-            Application *application = [Application MR_findAll][indexPath.row];
-            [application MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
+            dict = [SQLiteAccess selectManyRowsWithSQL:[NSString stringWithFormat:@"select * from %@", TABLE_APPLICATION]][indexPath.row];
+            [SQLiteAccess deleteWithSQL:[NSString stringWithFormat:@"delete from %@ where numberApplication = %d", TABLE_APPLICATION, ((NSString*)[dict valueForKey:@"numberApplication"]).integerValue]];
         }
         
         if([str isEqualToString:MY_CONTRACT]){
-            Contract *contract = [Contract MR_findAll][indexPath.row];
-            [contract MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
+            dict = [SQLiteAccess selectManyRowsWithSQL:[NSString stringWithFormat:@"select * from %@", TABLE_CONTRACT]][indexPath.row];
+            [SQLiteAccess deleteWithSQL:[NSString stringWithFormat:@"delete from %@ where numberContract = %d", TABLE_CONTRACT, ((NSString*)[dict valueForKey:@"numberContract"]).integerValue]];
         }
         
         if([str isEqualToString:MY_DOLZ]){
-            Dolz *dolz = [Dolz MR_findAll][indexPath.row];
-            [dolz MR_deleteInContext: [NSManagedObjectContext MR_defaultContext]];
+            dict = [SQLiteAccess selectManyRowsWithSQL:[NSString stringWithFormat:@"select * from %@", TABLE_DOLZ]][indexPath.row];
+            [SQLiteAccess deleteWithSQL:[NSString stringWithFormat:@"delete from %@ where nameDolz = '%@'", TABLE_DOLZ, [dict valueForKey:@"nameDolz"]]];
         }
-        
-        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+
         [myTable reloadData];
     }
 }
@@ -264,44 +211,8 @@
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
      NewBaseVC *viewContr;
     
-    if([str isEqualToString:MY_OFFICE]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newOffice"];
-    }
-    
-    if([str isEqualToString:MY_SERVICE]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newService"];
-    }
-    
-    if([str isEqualToString:MY_TARIFF]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newTariff"];
-    }
-    
-    if([str isEqualToString:MY_EQUIPMENT]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newEquipment"];
-    }
-    
-    if([str isEqualToString:MY_CLIENT]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newClient"];
-    }
-    
-    if([str isEqualToString:MY_WORKER]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newWorker"];
-    }
-    
-    if([str isEqualToString:MY_APPLICATION]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newApplication"];
-    }
-    
-    if([str isEqualToString:MY_CONTRACT]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newContract"];
-    }
-    
-    if([str isEqualToString:MY_DOLZ]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newDolz"];
-    }
-    
+    viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: myController];
     viewContr.delegate = self;
-    viewContr.fetchedResultsController = self.fetchedResultsController;
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewContr];
     popover = [[UIPopoverController alloc] initWithContentViewController:navigationController];
@@ -310,44 +221,7 @@
 }
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
-    if([str isEqualToString:MY_OFFICE]){
-        return [Office MR_countOfEntities];
-    }
-    
-    if([str isEqualToString:MY_SERVICE]){
-        return [Service MR_countOfEntities];
-    }
-    
-    if([str isEqualToString:MY_TARIFF]){
-        return [Tarifs MR_countOfEntities];
-    }
-    
-    if([str isEqualToString:MY_EQUIPMENT]){
-        return [Equipment MR_countOfEntities];
-    }
-    
-    if([str isEqualToString:MY_CLIENT]){
-        return [Client MR_countOfEntities];
-    }
-    
-    if([str isEqualToString:MY_WORKER]){
-        return [Worker MR_countOfEntities];
-    }
-    
-    if([str isEqualToString:MY_APPLICATION]){
-        return [Application MR_countOfEntities];
-    }
-    
-    if([str isEqualToString:MY_CONTRACT]){
-        return [Contract MR_countOfEntities];
-    }
-    
-    if([str isEqualToString:MY_DOLZ]){
-        return [Dolz MR_countOfEntities];
-    }
-    
-    return 0;
+    return [SQLiteAccess selectManyRowsWithSQL:[NSString stringWithFormat:@"select * from %@", myEntity]].count;
 }
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView{
@@ -358,127 +232,96 @@
 {
     str = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).entity;
     self.navigationItem.title = str;
+    myTable.hidden = NO;
     
     if([str isEqualToString:MY_OFFICE]){
         myEntity = TABLE_OFFICE;
+        myController = CONTROLLER_OFFICE;
         btn.titleLabel.text = @"Новый офис";
-        sort = @"name";
         infoBtn.hidden = YES;
     }
 
     if([str isEqualToString:MY_SERVICE]){
         myEntity = TABLE_SERVICE;
+        myController = CONTROLLER_SERVICE;
         btn.titleLabel.text = @"Новая услуга";
-        sort = @"name";
         infoBtn.hidden = YES;
     }
     
-    if([str isEqualToString:MY_TARIFF]){
-        myEntity = TABLE_TARIFF;
+    if([str isEqualToString:MY_GRAPH]){
+        myEntity = TABLE_GRAPH;
+        myController = CONTROLLER_GRAPH;
+        btn.titleLabel.text = @"Новый график";
+        infoBtn.hidden = YES;
+    }
+    
+    if([str isEqualToString:MY_TARIF]){
+        myEntity = TABLE_TARIF;
+        myController = CONTROLLER_TARIF;
         btn.titleLabel.text = @"Новый тариф";
-        sort = @"name";
         infoBtn.hidden = YES;
     }
 
-    if([str isEqualToString:MY_EQUIPMENT]){
-        myEntity = TABLE_EQUIPMENT;
+    if([str isEqualToString:MY_ROUTER]){
+        myEntity = TABLE_ROUTER;
+        myController = CONTROLLER_ROUTER;
         btn.titleLabel.text = @"Новое оборудование";
-        sort = @"model";
         infoBtn.hidden = YES;
     }
     
-    if([str isEqualToString:MY_CLIENT]){
-        myEntity = TABLE_CLIENT;
-        btn.titleLabel.text = @"Новый клиент";
-        sort = @"name";
+    if([str isEqualToString:MY_MODEL]){
+        myEntity = TABLE_MODEL;
+        myController = CONTROLLER_MODEL;
+        btn.titleLabel.text = @"Добавить модель";
         infoBtn.hidden = YES;
     }
     
     if([str isEqualToString:MY_WORKER]){
         myEntity = TABLE_WORKER;
+        myController = CONTROLLER_WORKER;
         btn.titleLabel.text = @"Новый сотрудник";
-        sort = @"name";
         infoBtn.hidden = NO;
     }
     
     if([str isEqualToString:MY_APPLICATION]){
         myEntity = TABLE_APPLICATION;
+        myController = CONTROLLER_APPLICATION;
         btn.titleLabel.text = @"Новая заявка";
-        sort = @"descriptioncontract";
         infoBtn.hidden = NO;
     }
     
     if([str isEqualToString:MY_CONTRACT]){
         myEntity = TABLE_CONTRACT;
+        myController = CONTROLLER_CONTRACT;
         btn.titleLabel.text = @"Новый договор";
-        sort = @"idContract";
         infoBtn.hidden = YES;
     }
     
     if([str isEqualToString:MY_DOLZ]){
         myEntity = TABLE_DOLZ;
+        myController = CONTROLLER_DOLZ;
         btn.titleLabel.text = @"Новая должность";
-        sort = @"idDolz";
         infoBtn.hidden = YES;
     }
     
-    [myTable reloadData];
+    if([str isEqualToString:MY_SEO]){
+        myTable.hidden = YES;
+        btn.hidden = YES;
+        infoBtn.hidden = NO;
+    }
     
-    //if (self.detailItem) {
-    //    self.detailDescriptionLabel.text = [[self.detailItem valueForKey:@"timeStamp"] description];
-    //}
+    [myTable reloadData];
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     NewBaseVC *viewContr;
     
-    if([str isEqualToString:MY_OFFICE]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newOffice"];
-        viewContr.object = [Office MR_findAll][indexPath.row];
-        
-    }
+    NSDictionary *fetch = [SQLiteAccess selectManyRowsWithSQL:[NSString stringWithFormat:@"select * from %@", myEntity]][indexPath.row];
     
-    if([str isEqualToString:MY_SERVICE]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newService"];
-        viewContr.object = [Service MR_findAll][indexPath.row];
-    }
+    viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: myController];
     
-    if([str isEqualToString:MY_TARIFF]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newTariff"];
-        viewContr.object = [Tarifs MR_findAll][indexPath.row];
-    }
-    
-    if([str isEqualToString:MY_EQUIPMENT]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newEquipment"];
-        viewContr.object = [Equipment MR_findAll][indexPath.row];
-    }
-    
-    if([str isEqualToString:MY_CLIENT]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newClient"];
-        viewContr.object = [Client MR_findAll][indexPath.row];
-    }
-    
-    if([str isEqualToString:MY_WORKER]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newWorker"];
-        viewContr.object = [Worker MR_findAll][indexPath.row];
-    }
-    
-    if([str isEqualToString:MY_APPLICATION]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newApplication"];
-        viewContr.object = [Application MR_findAll][indexPath.row];
-    }
-    
-    if([str isEqualToString:MY_CONTRACT]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newContract"];
-        viewContr.object = [Contract MR_findAll][indexPath.row];
-    }
-    
-    if([str isEqualToString:MY_DOLZ]){
-        viewContr = (UIViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"newDolz"];
-        viewContr.object = [Dolz MR_findAll][indexPath.row];
-    }
-    
+    viewContr.object = fetch;
     viewContr.delegate = self;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewContr];
     popover = [[UIPopoverController alloc] initWithContentViewController:navigationController];
@@ -488,25 +331,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
- 
-    managedObjectContext = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext;
-    
-    NSArray *arr = [Limits MR_findAll];
-    if(!arr.count){
-        Limits *limits = [Limits MR_createInContext:managedObjectContext];
-        limits.limApplication = [NSNumber numberWithInteger:1];
-        limits.limClient = [NSNumber numberWithInteger:1];
-        limits.limContract = [NSNumber numberWithInteger:1];
-        limits.limDolz = [NSNumber numberWithInteger:1];
-        limits.limEquipment = [NSNumber numberWithInteger:1];
-        limits.limOffice = [NSNumber numberWithInteger:1];
-        limits.limService = [NSNumber numberWithInteger:1];
-        limits.limTarifs = [NSNumber numberWithInteger:1];
-        limits.limWorker = [NSNumber numberWithInteger:1];
-        [managedObjectContext save:nil];
-    }
-    
-    Limits *limits = arr[0];
     
     [self configureView];
 }
